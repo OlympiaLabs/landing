@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Brand tokens. Accent is the LogoV1 red #E31E24 ≈ hsl(358 78% 50%); ink #111
+   ≈ hsl(0 0% 7%). Dark bands flip the same tokens via a `.dark` wrapper.
+--------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 7%;
+    --primary: 358 78% 50%; /* #E31E24 — the logo red */
+    --primary-foreground: 0 0% 100%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 358 78% 50%;
+    --radius: 0.5rem;
+  }
+
+  /* Near-black brand ink for the dramatic full-bleed bands. */
+  .dark {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 9%;
+    --card-foreground: 0 0% 98%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 62%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 98%;
+    --primary: 358 80% 56%;
+    --primary-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 22%;
+    --ring: 358 80% 56%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  /* Make the `hidden` attribute authoritative — Tailwind's display utilities
+     (flex/grid) are author rules that would otherwise beat the UA `[hidden]` rule. */
+  [hidden] {
+    display: none !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* offset anchored sections for the sticky nav */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Components / signatures
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Mono, tracked, uppercase — the telemetry/instrument voice for eyebrows + labels. */
+  .label-caps {
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-label text-muted-foreground;
+  }
+
+  /* The centred content measure. */
+  .wrap {
+    @apply mx-auto w-full max-w-container px-6 md:px-8;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion — a single deliberate hero sequence + safe, progressive scroll reveals.
+   No JS: above-the-fold uses load animations; below-the-fold uses CSS
+   scroll-driven timelines where supported, and is simply visible otherwise.
+--------------------------------------------------------------------------- */
+@layer utilities {
+  /* The hero IMU stroke trace draws itself on load (the product's signature artifact). */
+  .signal-path {
+    stroke-dasharray: var(--len, 2400);
+    stroke-dashoffset: var(--len, 2400);
+    animation: signal-draw 2.4s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+  }
+  @keyframes signal-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Staggered hero entrance. */
+  .enter {
+    opacity: 0;
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Progressive scroll reveal: visible by default; animates in where the browser
+     supports scroll-driven animations and motion is allowed. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        opacity: 0;
+        animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 22%;
+      }
+    }
+  }
+}

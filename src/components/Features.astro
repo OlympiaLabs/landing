@@ -1,0 +1,68 @@
+---
+import Motif from './Motif.astro'
+
+const features = [
+  {
+    motif: 'stroke',
+    tag: 'Catch · Drive · Exit · Recovery',
+    title: 'Stroke biomechanics',
+    body: 'Every phase of the stroke, timed. Propulsion-to-recovery ratio, and the speed you lose between strokes.',
+  },
+  {
+    motif: 'symmetry',
+    tag: 'Bilateral · Index',
+    title: 'Left / right symmetry',
+    body: 'How evenly force lands on each side. Asymmetry shows up here long before it shows up in your splits.',
+  },
+  {
+    motif: 'stability',
+    tag: 'Pitch · Roll · Yaw',
+    title: 'Boat stability',
+    body: 'Trim and heel through the water, stroke by stroke. A steadier hull is a faster hull.',
+  },
+  {
+    motif: 'fatigue',
+    tag: 'Trend · Session',
+    title: 'Technique under fatigue',
+    body: 'How form holds as you tire — consistency, distance-per-stroke, and the moment it starts to slip.',
+  },
+  {
+    motif: 'sync',
+    tag: 'IMU · GPS · Video',
+    title: 'Video, synchronised',
+    body: 'Sensor data over your line on the map and your footage. Scrub once; everything moves together.',
+  },
+  {
+    motif: 'coach',
+    tag: 'Shared · Workouts',
+    title: 'Coach & athlete',
+    body: 'Coaches set technique-focused work and pin feedback to the exact second on the water it matters.',
+  },
+]
+---
+
+<section id="measure" class="scroll-mt-20">
+  <div class="wrap py-24 md:py-32">
+    <div class="max-w-2xl">
+      <p class="label-caps">What we measure</p>
+      <h2 class="mt-5 text-[clamp(1.8rem,3.4vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground">
+        The numbers that decide a race — not the ones that just keep you busy.
+      </h2>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 border-l border-t border-border sm:grid-cols-2 lg:grid-cols-3">
+      {
+        features.map((f) => (
+          <article class="group flex flex-col gap-5 border-b border-r border-border p-7 transition-colors hover:bg-muted/40 md:p-9">
+            <Motif name={f.motif as any} />
+            <div class="flex flex-col gap-2.5">
+              <p class="font-mono text-[0.66rem] font-medium uppercase tracking-label text-primary">{f.tag}</p>
+              <h3 class="text-xl font-semibold tracking-tight text-foreground">{f.title}</h3>
+              <p class="text-[0.95rem] leading-relaxed text-muted-foreground">{f.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-label="OlympiaLabs">
+  <path d="M100 0A100 100 0 0 1 200 100L0 100A100 100 0 0 1 100 0Z" fill="#111111"/>
+  <path d="M0 120L200 120A100 100 0 0 1 0 120Z" fill="#E31E24"/>
+  <rect x="0" y="100" width="200" height="20" fill="#ffffff"/>
+  <rect x="125" y="75" width="50" height="50" fill="#111111" stroke="#ffffff" stroke-width="8"/>
+</svg>
