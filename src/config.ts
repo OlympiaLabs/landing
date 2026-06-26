@@ -1,8 +1,5 @@
 /** Site-wide constants and runtime config for the OlympiaLabs landing site. */
 
-/** Where the waitlist form POSTs (see .env / .env.example). Empty in dev = demo mode. */
-export const WAITLIST_ENDPOINT = import.meta.env.PUBLIC_WAITLIST_ENDPOINT ?? ''
-
 /** Product webapp origin — "Sign in" / "Open app" links. */
 export const APP_URL = import.meta.env.PUBLIC_APP_URL ?? 'https://app.olympialabs.eu'
 export const SIGN_IN_URL = `${APP_URL.replace(/\/$/, '')}/login`

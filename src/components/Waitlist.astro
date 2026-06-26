@@ -1,6 +1,4 @@
 ---
-import { WAITLIST_ENDPOINT } from '../config'
-
 const inputClass =
   'h-12 w-full rounded-md border border-input bg-transparent px-4 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
 ---
@@ -20,13 +18,23 @@ const inputClass =
       </div>
 
       <div class="lg:col-span-6 lg:border-l lg:border-border lg:pl-10">
+        <!--
+          Netlify Forms: detected at deploy time by `name` + `data-netlify`.
+          Submissions appear under Forms in the Netlify dashboard. The hidden
+          `form-name` and `bot-field` (honeypot) fields are required by Netlify.
+        -->
         <form
           id="waitlist-form"
-          action={WAITLIST_ENDPOINT}
+          name="waitlist"
           method="POST"
+          action="/"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
           class="flex flex-col gap-5"
           novalidate
         >
+          <input type="hidden" name="form-name" value="waitlist" />
+
           <div>
             <label for="wl-email" class="sr-only">Email address</label>
             <input
@@ -42,8 +50,8 @@ const inputClass =
 
           <!-- honeypot: bots fill it, humans never see it -->
           <div class="hidden" aria-hidden="true">
-            <label>Leave this field empty
-              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+            <label>Don't fill this out if you're human
+              <input name="bot-field" tabindex="-1" autocomplete="off" />
             </label>
           </div>
 
@@ -101,12 +109,20 @@ const inputClass =
     const errorEl = document.getElementById('waitlist-error') as HTMLElement
     const successEl = document.getElementById('waitlist-success') as HTMLElement
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-    const endpoint = form.getAttribute('action') || ''
-    const isDemo = endpoint === '' || endpoint.includes('your-form-id')
+    const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
 
     const showError = (msg: string) => {
       errorEl.textContent = msg
       errorEl.hidden = false
+    }
+
+    // Encode the form as application/x-www-form-urlencoded (Netlify's AJAX recipe).
+    const encode = (f: HTMLFormElement) => {
+      const params = new URLSearchParams()
+      new FormData(f).forEach((value, key) => {
+        if (typeof value === 'string') params.append(key, value)
+      })
+      return params.toString()
     }
 
     form.addEventListener('submit', async (event) => {
@@ -114,13 +130,13 @@ const inputClass =
       errorEl.hidden = true
 
       // honeypot tripped → silently drop
-      const trap = form.querySelector('input[name="_gotcha"]') as HTMLInputElement | null
+      const trap = form.querySelector('input[name="bot-field"]') as HTMLInputElement | null
       if (trap && trap.value) return
 
       if (!form.reportValidity()) return
 
-      if (isDemo) {
-        showError('Demo mode — set PUBLIC_WAITLIST_ENDPOINT in .env to start collecting sign-ups.')
+      if (isLocal) {
+        showError('Netlify handles submissions — this will work once the site is deployed.')
         return
       }
 
@@ -129,19 +145,17 @@ const inputClass =
       submitBtn.textContent = 'Joining…'
 
       try {
-        const res = await fetch(endpoint, {
+        const res = await fetch(form.getAttribute('action') || '/', {
           method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(form),
         })
         if (res.ok) {
           form.hidden = true
           successEl.hidden = false
           successEl.focus()
         } else {
-          const data = await res.json().catch(() => null)
-          const message = data?.errors?.[0]?.message ?? 'Something went wrong. Please try again.'
-          showError(message)
+          showError('Something went wrong. Please try again.')
           submitBtn.disabled = false
           submitBtn.textContent = original
         }

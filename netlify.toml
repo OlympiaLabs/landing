@@ -1,0 +1,16 @@
+# Netlify build configuration for the OlympiaLabs landing site.
+# Static Astro output — no adapter needed. The waitlist uses Netlify Forms
+# (the form is named "waitlist"; detected automatically at deploy time).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Long-cache the fingerprinted assets Astro emits under /_astro/.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
