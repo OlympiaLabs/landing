@@ -1,0 +1,49 @@
+---
+/**
+ * The organising idea of the page: capture → compare → explain → decide.
+ *
+ * The verbs are deliberately plain. The comparison is a rolling window over the
+ * athlete's recent sessions, so the closing note says exactly that rather than
+ * implying a model that learns.
+ */
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
+
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).loop
+---
+
+<section id="loop" class="scroll-mt-20 bg-muted/20">
+  <div class="wrap py-24 md:py-32">
+    <div class="max-w-2xl">
+      <p class="label-caps">{c.eyebrow}</p>
+      <h2
+        class="mt-5 text-[clamp(1.8rem,3.4vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground"
+      >
+        {c.title}
+      </h2>
+    </div>
+
+    <ol class="mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-4">
+      {
+        c.steps.map((s, i) => (
+          <li class:list={['reveal relative pt-7', i > 0 && 'lg:border-l lg:border-border lg:pl-10']}>
+            <span class="absolute left-0 top-0 h-px w-full bg-border" aria-hidden="true" />
+            <span class="absolute left-0 top-0 h-px w-10 bg-primary" aria-hidden="true" />
+            <span class="font-mono text-sm font-medium text-muted-foreground">{s.n}</span>
+            <h3 class="mt-5 text-2xl font-semibold tracking-tight text-foreground">{s.name}</h3>
+            <p class="mt-1 font-mono text-[0.7rem] uppercase tracking-label text-primary">{s.kind}</p>
+            <p class="mt-4 leading-relaxed text-muted-foreground">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div
+      class="mt-14 flex flex-col gap-3 border-t border-border pt-8 sm:flex-row sm:items-baseline sm:justify-between"
+    >
+      <p class="font-mono text-[0.66rem] uppercase tracking-label text-primary">{c.footLine}</p>
+      <p class="max-w-md text-sm leading-relaxed text-muted-foreground">{c.footNote}</p>
+    </div>
+  </div>
+</section>

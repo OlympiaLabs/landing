@@ -1,0 +1,44 @@
+---
+/**
+ * Section order carries the argument: the promise, then proof it exists, then
+ * the problem it answers, how it works, what it sees, what a coach gets, the
+ * parts, where every number comes from — and only then the ask.
+ *
+ * The light → muted → dark rhythm is structure, not theming. `Problem` and
+ * `Pilot` are the two dark bands and set the page's cadence; check it still
+ * alternates before reordering anything. `Proof` renders nothing until real
+ * media is configured, and the rhythm holds either way.
+ */
+import Base from '../layouts/Base.astro'
+import Nav from './Nav.astro'
+import Hero from './Hero.astro'
+import Waterline from './Waterline.astro'
+import Stats from './Stats.astro'
+import Proof from './Proof.astro'
+import Problem from './Problem.astro'
+import Loop from './Loop.astro'
+import Observes from './Observes.astro'
+import Coach from './Coach.astro'
+import Pieces from './Pieces.astro'
+import Trust from './Trust.astro'
+import Pilot from './Pilot.astro'
+import Footer from './Footer.astro'
+---
+
+<Base>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Waterline />
+    <Stats />
+    <Proof />
+    <Problem />
+    <Loop />
+    <Observes />
+    <Coach />
+    <Pieces />
+    <Trust />
+    <Pilot />
+  </main>
+  <Footer />
+</Base>

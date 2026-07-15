@@ -1,0 +1,25 @@
+---
+/** Dark band: the thesis. Sets up the question the rest of the page answers. */
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
+
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).problem
+---
+
+<section class="dark bg-background text-foreground">
+  <div class="wrap py-24 md:py-32">
+    <p class="label-caps">{c.eyebrow}</p>
+    <div class="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-10">
+      <h2
+        class="text-[clamp(1.9rem,3.8vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-balance lg:col-span-8"
+      >
+        {c.title}
+      </h2>
+      <div class="lg:col-span-4 lg:border-l lg:border-border lg:pl-10">
+        <div class="h-px w-16 bg-primary"></div>
+        <p class="mt-6 text-lg leading-relaxed text-muted-foreground">{c.body}</p>
+      </div>
+    </div>
+  </div>
+</section>
