@@ -1,33 +1,35 @@
 ---
 import StrokeSignal from './StrokeSignal.astro'
+import { COPY } from '../copy'
+
+const c = COPY.hero
 ---
 
 <section id="top" class="relative overflow-hidden">
   <div class="wrap grid grid-cols-1 items-center gap-14 py-20 md:py-28 lg:grid-cols-12 lg:gap-10 lg:py-32">
     <div class="lg:col-span-7">
-      <p class="label-caps enter" style="animation-delay:0ms">Performance analytics · Kayak racing</p>
+      <p class="label-caps enter" style="animation-delay:0ms">{c.eyebrow}</p>
 
       <h1 class="mt-6 text-[clamp(2.5rem,6.2vw,5rem)] font-bold leading-[0.95] tracking-[-0.02em] text-foreground">
-        <span class="enter block" style="animation-delay:80ms">Measure technique,</span>
-        <span class="enter block font-light text-muted-foreground" style="animation-delay:160ms">not just effort.</span>
+        <span class="enter block" style="animation-delay:80ms">{c.titleTop}</span>
+        <span class="enter block font-light text-muted-foreground" style="animation-delay:160ms">{c.titleBottom}</span>
       </h1>
 
       <div class="enter mt-8 h-px w-28 bg-primary" style="animation-delay:240ms"></div>
 
       <p class="enter mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground" style="animation-delay:320ms">
-        OlympiaLabs reads every stroke — and the boat beneath it — from catch to exit,
-        left to right, trim to heel. Then it turns the numbers into coaching you can act on.
+        {c.body}
       </p>
 
       <div class="enter mt-10 flex flex-wrap items-center gap-x-7 gap-y-4" style="animation-delay:400ms">
         <a
-          href="#waitlist"
+          href="#pilot"
           class="inline-flex h-12 items-center justify-center rounded-md bg-primary px-7 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          Join the waitlist
+          {c.ctaPrimary}
         </a>
-        <a href="#system" class="group inline-flex items-center gap-2 text-base font-medium text-foreground">
-          See how it works
+        <a href="#trust" class="group inline-flex items-center gap-2 text-base font-medium text-foreground">
+          {c.ctaSecondary}
           <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
         </a>
       </div>

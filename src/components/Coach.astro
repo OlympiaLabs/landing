@@ -1,0 +1,53 @@
+---
+import { COPY } from '../copy'
+
+const c = COPY.coach
+---
+
+<section id="coach" class="scroll-mt-20 bg-muted/20">
+  <div class="wrap py-24 md:py-32">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-5">
+        <p class="label-caps">{c.eyebrow}</p>
+        <h2
+          class="mt-5 text-[clamp(1.8rem,3.4vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground"
+        >
+          {c.title}
+        </h2>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">{c.body}</p>
+
+        <div class="mt-10 border-t border-border pt-7">
+          <p class="font-mono text-[0.66rem] uppercase tracking-label text-primary">{c.questionsLabel}</p>
+          <ul class="mt-5 space-y-4">
+            {
+              c.questions.map((q) => (
+                <li class="flex gap-3.5 text-[0.95rem] leading-relaxed text-foreground">
+                  <span aria-hidden="true" class="mt-2.5 h-px w-4 shrink-0 bg-primary" />
+                  <span>{q}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <dl class="border-t border-border">
+          {
+            c.points.map((p) => (
+              <div class="reveal grid grid-cols-1 gap-2 border-b border-border py-7 sm:grid-cols-[10rem_1fr] sm:gap-8">
+                <dt class="font-mono text-[0.66rem] font-medium uppercase tracking-label text-primary sm:pt-1">
+                  {p.tag}
+                </dt>
+                <dd>
+                  <p class="text-lg font-semibold tracking-tight text-foreground">{p.title}</p>
+                  <p class="mt-2 leading-relaxed text-muted-foreground">{p.body}</p>
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

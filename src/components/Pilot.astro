@@ -1,0 +1,255 @@
+---
+/**
+ * The conversion band: a pilot-club application, not a waitlist signup.
+ *
+ * NOTE FOR DEPLOY — Netlify detects forms at build time from the rendered HTML,
+ * keyed on `name`. This form is `pilot`; the old `waitlist` form will stop
+ * receiving entries once this ships, though its past submissions stay in the
+ * dashboard under that name. Export them first if they matter.
+ */
+import { COPY } from '../copy'
+
+const c = COPY.pilot
+const f = c.form
+
+const fieldClass =
+  'h-12 w-full rounded-md border border-input bg-transparent px-4 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label text-muted-foreground'
+---
+
+<section id="pilot" class="dark scroll-mt-20 bg-background text-foreground">
+  <div class="wrap py-24 md:py-32">
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-5">
+        <p class="label-caps">{c.eyebrow}</p>
+        <h2 class="mt-5 text-[clamp(2rem,4.4vw,3.4rem)] font-semibold leading-[1.04] tracking-[-0.02em]">
+          {c.title}
+        </h2>
+        <p class="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">{c.body}</p>
+
+        <div class="mt-10 border-t border-border pt-7">
+          <p class="font-mono text-[0.66rem] uppercase tracking-label text-primary">{c.benefitsLabel}</p>
+          <ul class="mt-5 space-y-3">
+            {
+              c.benefits.map((b) => (
+                <li class="flex gap-3.5 text-[0.95rem] leading-relaxed text-foreground">
+                  <span aria-hidden="true" class="mt-2.5 h-px w-4 shrink-0 bg-primary" />
+                  <span>{b}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <p class="mt-7 max-w-md text-sm leading-relaxed text-muted-foreground">{c.note}</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 lg:border-l lg:border-border lg:pl-10">
+        <!--
+          Netlify Forms: detected at deploy time by `name` + `data-netlify`.
+          Submissions appear under Forms in the Netlify dashboard. The hidden
+          `form-name` and `bot-field` (honeypot) fields are required by Netlify.
+        -->
+        <form
+          id="pilot-form"
+          name="pilot"
+          method="POST"
+          action="/"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+          class="flex flex-col gap-6"
+          novalidate
+          data-msg-submitting={f.submitting}
+          data-msg-local={f.errorLocal}
+          data-msg-generic={f.errorGeneric}
+          data-msg-network={f.errorNetwork}
+        >
+          <input type="hidden" name="form-name" value="pilot" />
+
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <div>
+              <label for="pilot-name" class={labelClass}>{f.name.label}</label>
+              <input
+                id="pilot-name"
+                type="text"
+                name="name"
+                required
+                autocomplete="name"
+                placeholder={f.name.placeholder}
+                class={fieldClass}
+              />
+            </div>
+
+            <div>
+              <label for="pilot-email" class={labelClass}>{f.email.label}</label>
+              <input
+                id="pilot-email"
+                type="email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder={f.email.placeholder}
+                class={fieldClass}
+              />
+            </div>
+
+            <div>
+              <label for="pilot-club" class={labelClass}>{f.club.label}</label>
+              <input
+                id="pilot-club"
+                type="text"
+                name="club"
+                required
+                autocomplete="organization"
+                placeholder={f.club.placeholder}
+                class={fieldClass}
+              />
+            </div>
+
+            <div>
+              <label for="pilot-role" class={labelClass}>{f.role.label}</label>
+              <select id="pilot-role" name="role" required class={fieldClass}>
+                {f.role.options.map((o) => <option value={o}>{o}</option>)}
+              </select>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="pilot-athletes" class={labelClass}>{f.athletes.label}</label>
+              <input
+                id="pilot-athletes"
+                type="number"
+                name="athletes"
+                min="1"
+                max="999"
+                inputmode="numeric"
+                placeholder={f.athletes.placeholder}
+                class={fieldClass}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="pilot-message" class={labelClass}>{f.message.label}</label>
+            <textarea
+              id="pilot-message"
+              name="message"
+              rows="3"
+              placeholder={f.message.placeholder}
+              class="w-full rounded-md border border-input bg-transparent px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            ></textarea>
+          </div>
+
+          <!-- honeypot: bots fill it, humans never see it -->
+          <div class="hidden" aria-hidden="true">
+            <label>
+              Don't fill this out if you're human
+              <input name="bot-field" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <label class="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+            <input type="checkbox" name="consent" required class="mt-0.5 h-4 w-4 shrink-0 accent-primary" />
+            <span>{f.consent}</span>
+          </label>
+
+          <p id="pilot-error" role="alert" hidden class="text-sm font-medium text-primary"></p>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button
+              type="submit"
+              class="inline-flex h-12 items-center justify-center rounded-md bg-primary px-7 text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {f.submit}
+            </button>
+            <p class="font-mono text-[0.66rem] uppercase tracking-label text-muted-foreground">{f.fineprint}</p>
+          </div>
+        </form>
+
+        <div
+          id="pilot-success"
+          tabindex="-1"
+          hidden
+          class="flex items-start gap-4 rounded-md border border-border bg-muted/40 p-6"
+        >
+          <svg viewBox="0 0 24 24" class="mt-0.5 h-6 w-6 shrink-0 stroke-primary" fill="none" aria-hidden="true">
+            <path d="M5 12.5l4.5 4.5L19 7.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <div>
+            <p class="font-semibold text-foreground">{f.successTitle}</p>
+            <p class="mt-1 text-sm leading-relaxed text-muted-foreground">{f.successBody}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Runtime strings arrive via data-* rather than an import: importing `copy.ts`
+  // here would bundle the whole page's prose into the client for the sake of
+  // four messages, and it can't be tree-shaken out of a single const object.
+  const form = document.getElementById('pilot-form') as HTMLFormElement | null
+  if (form) {
+    const msg = form.dataset
+    const errorEl = document.getElementById('pilot-error') as HTMLElement
+    const successEl = document.getElementById('pilot-success') as HTMLElement
+    const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
+    const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
+
+    const showError = (text: string) => {
+      errorEl.textContent = text
+      errorEl.hidden = false
+    }
+
+    // Encode the form as application/x-www-form-urlencoded (Netlify's AJAX recipe).
+    const encode = (f: HTMLFormElement) => {
+      const params = new URLSearchParams()
+      new FormData(f).forEach((value, key) => {
+        if (typeof value === 'string') params.append(key, value)
+      })
+      return params.toString()
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      errorEl.hidden = true
+
+      // honeypot tripped → silently drop
+      const trap = form.querySelector('input[name="bot-field"]') as HTMLInputElement | null
+      if (trap && trap.value) return
+
+      // `novalidate` is set so this error slot owns the messaging, but the
+      // browser's own constraint UI is still what gates the submit.
+      if (!form.reportValidity()) return
+
+      if (isLocal) {
+        showError(msg.msgLocal ?? "")
+        return
+      }
+
+      const original = submitBtn.textContent
+      submitBtn.disabled = true
+      submitBtn.textContent = msg.msgSubmitting ?? ""
+
+      try {
+        const res = await fetch(form.getAttribute('action') || '/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(form),
+        })
+        if (res.ok) {
+          form.hidden = true
+          successEl.hidden = false
+          successEl.focus()
+        } else {
+          showError(msg.msgGeneric ?? "")
+          submitBtn.disabled = false
+          submitBtn.textContent = original
+        }
+      } catch {
+        showError(msg.msgNetwork ?? "")
+        submitBtn.disabled = false
+        submitBtn.textContent = original
+      }
+    })
+  }
+</script>

@@ -1,14 +1,24 @@
 ---
 /**
- * The hero thesis: a kayak stroke as the sensor sees it. A synthetic but
- * believable IMU acceleration trace, drawn on load, sitting on the "waterline"
- * axis with the brand square marking one catch. The most characteristic
- * artifact in the sport's world — the page opens with the data, not a stock photo.
+ * The hero figure: a kayak stroke roughly as the sensor sees it — a synthetic
+ * roll-rate trace drawn on load, sitting on the "waterline" axis with the brand
+ * square marking one stroke. The page opens with the signal rather than a stock
+ * photo.
+ *
+ * The waveform is generated, not recorded, and the caption says so. Real
+ * footage belongs in the proof section (see `Proof.astro`); this stays an
+ * honest illustration until it can be replaced by a real trace.
+ *
+ * Strokes are detected from high-passed gyroscope roll-rate, which is why this
+ * draws roll-rate and not acceleration.
  */
+import { COPY } from '../copy'
+
 interface Props {
   class?: string
 }
 const { class: className = '' } = Astro.props
+const c = COPY.hero.signal
 
 // Geometry of the plot area (SVG user units).
 const W = 560
@@ -27,7 +37,7 @@ let px = 0
 let py = 0
 for (let x = 0; x <= W; x += step) {
   const i = Math.floor(x / periodPx)
-  const a = amp * (i % 2 === 0 ? 1 : 0.88) // slight L/R amplitude difference → "symmetry"
+  const a = amp * (i % 2 === 0 ? 1 : 0.88) // slight left/right amplitude difference
   const th = (2 * Math.PI * x) / periodPx
   const y = baseline - a * (Math.sin(th) + 0.32 * Math.sin(2 * th + 0.6))
   if (x === 0) {
@@ -40,10 +50,10 @@ for (let x = 0; x <= W; x += step) {
   py = y
 }
 const dashLen = Math.ceil(len) + 8
-const catchX = 6 // square marker rides the axis at the first catch
+const markerX = 6 // square marker rides the axis at the first stroke
 ---
 
-<figure class={`relative ${className}`} aria-label="Stroke acceleration signal captured by the sensor">
+<figure class={`relative ${className}`} aria-label={c.aria}>
   <svg viewBox={`0 0 ${W} ${H}`} class="w-full overflow-visible" role="img" aria-hidden="true">
     <!-- waterline axis (ink) with a red segment, echoing the logo -->
     <line x1="0" y1={baseline} x2={W} y2={baseline} class="stroke-border" stroke-width="1" />
@@ -60,9 +70,9 @@ const catchX = 6 // square marker rides the axis at the first catch
       style={`--len:${dashLen}`}
     />
 
-    <!-- precision square on the catch (the brand mark, reused as a data cursor) -->
+    <!-- precision square on the axis (the brand mark, reused as a data cursor) -->
     <rect
-      x={catchX - 5}
+      x={markerX - 5}
       y={baseline - 5}
       width="10"
       height="10"
@@ -71,18 +81,22 @@ const catchX = 6 // square marker rides the axis at the first catch
     />
   </svg>
 
-  <!-- the stroke, resolved into its four phases -->
-  <div class="mt-3 flex justify-between border-t border-border pt-3 font-mono text-[0.6rem] uppercase tracking-label text-muted-foreground">
-    <span>Catch</span>
-    <span>Drive</span>
-    <span>Exit</span>
-    <span>Recovery</span>
-  </div>
+  <figcaption
+    class="mt-3 border-t border-border pt-3 font-mono text-[0.6rem] uppercase tracking-label text-muted-foreground"
+  >
+    {c.caption}
+  </figcaption>
 
-  <!-- mono readouts, top-right: the instrument voice -->
-  <div class="pointer-events-none absolute right-0 top-0 flex flex-col items-end gap-1 font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground">
-    <span><span class="text-foreground">6</span>-axis imu</span>
-    <span>Δv <span class="text-foreground">4.2%</span></span>
-    <span>sym <span class="text-primary">96%</span></span>
+  <!-- mono readouts, top-right: the instrument voice. Hardware facts only. -->
+  <div
+    class="pointer-events-none absolute right-0 top-0 flex flex-col items-end gap-1 font-mono text-[0.62rem] uppercase tracking-wide text-muted-foreground"
+    aria-hidden="true"
+  >
+    {c.readouts.map((r) => (
+      <span>
+        <span class="text-foreground">{r.n}</span>
+        {r.t}
+      </span>
+    ))}
   </div>
 </figure>
