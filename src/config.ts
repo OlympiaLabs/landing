@@ -5,21 +5,39 @@
  * across languages. User-facing prose lives in `copy.ts`; the `key` fields
  * below index into it.
  */
+import { DEFAULT_LOCALE, type Locale } from './i18n'
 
 /** Product webapp origin — "Sign in" / "Open app" links. */
 export const APP_URL = import.meta.env.PUBLIC_APP_URL ?? 'https://app.olympialabs.eu'
 export const SIGN_IN_URL = `${APP_URL.replace(/\/$/, '')}/login`
 
-export const SITE = {
+const SITE_EN = {
   name: 'OlympiaLabs',
   domain: 'olympialabs.eu',
-  tagline: 'SPEED. PRECISION. RELIABILITY.',
-  title: 'OlympiaLabs — Coach the athlete, not the average.',
+  tagline: 'Better coaching, athlete by athlete.',
+  title: 'OlympiaLabs — Clearer coaching for sprint kayak and canoe.',
   description:
-    'OlympiaLabs measures sprint kayak and canoe sessions at 833 Hz — boat motion, GPS, video and body movement — and compares every session against the athlete’s own history. Findings are computed in code, never invented. Now recruiting pilot clubs.',
+    'OlympiaLabs helps sprint kayak and canoe coaches review sessions with more context: boat motion, GPS, video and body movement, compared against each athlete’s own recent history. Now onboarding pilot clubs.',
   location: 'Viana do Castelo, Portugal',
   contactEmail: 'hello@olympialabs.eu',
-} as const
+}
+
+type Site = typeof SITE_EN
+
+const SITE_PT: Site = {
+  name: 'OlympiaLabs',
+  domain: 'olympialabs.eu',
+  tagline: 'Melhor treino, atleta a atleta.',
+  title: 'OlympiaLabs — Mais clareza para treinar kayak e canoa de velocidade.',
+  description:
+    'A OlympiaLabs ajuda treinadores de kayak e canoa de velocidade a rever sessões com mais contexto: movimento do barco, GPS, vídeo e movimento corporal, comparados com o histórico recente de cada atleta. Estamos a receber clubes piloto.',
+  location: 'Viana do Castelo, Portugal',
+  contactEmail: 'hello@olympialabs.eu',
+}
+
+export function getSite(locale: Locale = DEFAULT_LOCALE): Site {
+  return locale === 'pt' ? SITE_PT : SITE_EN
+}
 
 /** Anchor targets — shared by the nav and the footer's Product column. */
 export const NAV_LINKS = [

@@ -1,29 +1,29 @@
 ---
 /**
- * The OlympiaLabs mark — faithful to brand/LogoV1/Olympia_Labs_Logo.svg.
- * A circle split by a white "waterline": ink top, red bottom, with a precision
- * square straddling the line. Token-driven so it inverts automatically:
- *   - top half + square fill  → currentColor (ink on light, white on dark)
- *   - bottom half             → brand red (--primary)
- *   - divider + square border → the section background (the negative-space gap)
- * Set the surrounding text colour and it adapts to any band.
+ * The landing site reuses the webapp's current mark: a neutral compass icon
+ * with the single brand accent confined to the mark itself.
  */
 interface Props {
   class?: string
   title?: string
 }
-const { class: className = 'h-9 w-auto', title = 'OlympiaLabs' } = Astro.props
+const { class: className = 'size-5', title = 'OlympiaLabs' } = Astro.props
 ---
 
 <svg
   class={className}
-  viewBox="0 0 200 220"
+  viewBox="0 0 24 24"
   role="img"
   aria-label={title}
   xmlns="http://www.w3.org/2000/svg"
+  fill="none"
 >
-  <path d="M100 0A100 100 0 0 1 200 100L0 100A100 100 0 0 1 100 0Z" class="fill-current" />
-  <path d="M0 120L200 120A100 100 0 0 1 0 120Z" class="fill-primary" />
-  <rect x="0" y="100" width="200" height="20" class="fill-background" />
-  <rect x="125" y="75" width="50" height="50" class="fill-current stroke-background" stroke-width="8" />
+  <circle cx="12" cy="12" r="10" class="stroke-current" stroke-width="1.75" />
+  <polygon
+    points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+    class="stroke-current"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="1.75"
+  />
 </svg>

@@ -4,26 +4,36 @@ import '@fontsource/ibm-plex-mono/400.css'
 import '@fontsource/ibm-plex-mono/500.css'
 import '@fontsource/ibm-plex-mono/600.css'
 import '../styles/global.css'
-import { SITE } from '../config'
-import { COPY } from '../copy'
+import { getSite } from '../config'
+import { getCopy } from '../copy'
+import { getLocaleFromPath, getLocalizedPath, LOCALES } from '../i18n'
 
 interface Props {
   title?: string
   description?: string
 }
-const { title = SITE.title, description = SITE.description } = Astro.props
+const locale = getLocaleFromPath(Astro.url.pathname)
+const siteMeta = getSite(locale)
+const copy = getCopy(locale)
+const { title = siteMeta.title, description = siteMeta.description } = Astro.props
 const canonical = new URL(Astro.url.pathname, Astro.site)
 const ogImage = new URL('/brand/og.png', Astro.site).href
+const alternates = [
+  { href: new URL(getLocalizedPath('en', Astro.url.pathname), Astro.site).href, hreflang: LOCALES.en.lang },
+  { href: new URL(getLocalizedPath('pt', Astro.url.pathname), Astro.site).href, hreflang: LOCALES.pt.lang },
+]
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={LOCALES[locale].lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
+    {alternates.map((alt) => <link rel="alternate" hreflang={alt.hreflang} href={alt.href} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
     <meta name="theme-color" content="#111111" />
     <meta name="color-scheme" content="light" />
 
@@ -32,7 +42,7 @@ const ogImage = new URL('/brand/og.png', Astro.site).href
     <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:site_name" content={siteMeta.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical.href} />
@@ -52,7 +62,7 @@ const ogImage = new URL('/brand/og.png', Astro.site).href
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:text-background"
     >
-      {COPY.a11y.skipToContent}
+      {copy.a11y.skipToContent}
     </a>
     <slot />
   </body>

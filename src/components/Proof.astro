@@ -9,9 +9,11 @@
  * set its `src` in config.ts, and it appears with its caption already written.
  */
 import { PROOF_MEDIA } from '../config'
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.proof
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).proof
 const items = PROOF_MEDIA.filter((m) => m.src !== '').map((m) => ({ ...m, ...c.captions[m.key] }))
 ---
 

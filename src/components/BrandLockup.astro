@@ -1,9 +1,10 @@
 ---
 import BrandMark from './BrandMark.astro'
+import { getSite } from '../config'
+import { getLocaleFromPath } from '../i18n'
 
 /**
- * Mark + wordmark. The wordmark reuses the LogoV1 split: "Olympia" bold,
- * "Labs" light — the one type gesture that recurs across the page.
+ * Mark + wordmark, aligned with the webapp lockup.
  */
 interface Props {
   class?: string
@@ -20,24 +21,26 @@ const {
   ariaLabel = 'OlympiaLabs — home',
 } = Astro.props
 
-const markSize = { sm: 'h-7', md: 'h-9', lg: 'h-12' }[size]
-const wordSize = { sm: 'text-base', md: 'text-lg', lg: 'text-2xl' }[size]
+const markSize = { sm: 'size-5', md: 'size-6', lg: 'size-8' }[size]
+const wordSize = { sm: 'text-sm', md: 'text-base', lg: 'text-xl' }[size]
 const Tag = href ? 'a' : 'div'
+const locale = getLocaleFromPath(Astro.url.pathname)
+const siteMeta = getSite(locale)
 ---
 
 <Tag
-  class:list={['inline-flex items-center gap-3 transition-opacity hover:opacity-80', className]}
+  class:list={['inline-flex items-center gap-2 transition-opacity hover:opacity-80', className]}
   {...href ? { href, 'aria-label': ariaLabel } : {}}
 >
-  <BrandMark class={`${markSize} w-auto shrink-0`} />
+  <BrandMark class={`${markSize} shrink-0 text-primary`} />
   <span class="flex flex-col leading-none">
-    <span class={`${wordSize} leading-none tracking-tight text-foreground`}>
-      <span class="font-bold">Olympia</span> <span class="font-light">Labs</span>
+    <span class={`${wordSize} uppercase leading-none tracking-label text-foreground`}>
+      <span class="font-bold">Olympia</span> <span class="font-normal">Labs</span>
     </span>
     {
       tagline && (
         <span class="mt-1.5 font-mono text-[0.55rem] font-medium uppercase tracking-wide2 text-primary">
-          Speed. Precision. Reliability.
+          {siteMeta.tagline}
         </span>
       )
     }

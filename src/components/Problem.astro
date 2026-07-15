@@ -1,8 +1,10 @@
 ---
 /** Dark band: the thesis. Sets up the question the rest of the page answers. */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.problem
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).problem
 ---
 
 <section class="dark bg-background text-foreground">

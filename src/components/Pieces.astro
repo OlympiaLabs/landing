@@ -4,9 +4,11 @@
  * KayakPro) are deliberately not used here — three brands to learn before you
  * understand the value is work the visitor shouldn't have to do.
  */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.pieces
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).pieces
 ---
 
 <section class="scroll-mt-20">

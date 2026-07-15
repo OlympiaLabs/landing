@@ -1,8 +1,10 @@
 ---
 import Motif from './Motif.astro'
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.observes
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).observes
 ---
 
 <section id="observes" class="scroll-mt-20">

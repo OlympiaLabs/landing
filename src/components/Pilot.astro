@@ -7,9 +7,11 @@
  * receiving entries once this ships, though its past submissions stay in the
  * dashboard under that name. Export them first if they matter.
  */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.pilot
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).pilot
 const f = c.form
 
 const fieldClass =

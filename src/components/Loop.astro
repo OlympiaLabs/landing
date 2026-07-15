@@ -6,9 +6,11 @@
  * athlete's recent sessions, so the closing note says exactly that rather than
  * implying a model that learns.
  */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.loop
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).loop
 ---
 
 <section id="loop" class="scroll-mt-20 bg-muted/20">

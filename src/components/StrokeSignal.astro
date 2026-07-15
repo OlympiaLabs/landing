@@ -12,13 +12,15 @@
  * Strokes are detected from high-passed gyroscope roll-rate, which is why this
  * draws roll-rate and not acceleration.
  */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
 interface Props {
   class?: string
 }
 const { class: className = '' } = Astro.props
-const c = COPY.hero.signal
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).hero.signal
 
 // Geometry of the plot area (SVG user units).
 const W = 560

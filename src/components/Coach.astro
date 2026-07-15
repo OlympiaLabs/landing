@@ -1,7 +1,9 @@
 ---
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.coach
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).coach
 ---
 
 <section id="coach" class="scroll-mt-20 bg-muted/20">

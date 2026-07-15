@@ -1,3 +1,5 @@
+import { DEFAULT_LOCALE, type Locale } from './i18n'
+
 /**
  * Every user-facing string on the site, in one place.
  *
@@ -34,69 +36,101 @@
  * ---------------------------------------------------------------------------
  */
 
-export const COPY = {
+const COPY_EN = {
   nav: {
     /** Keyed by `NAV_LINKS[].key` in config.ts. */
     links: {
-      observes: 'What it sees',
+      observes: 'What you can review',
       loop: 'How it works',
-      coach: 'For coaches',
-      trust: 'What’s real',
+      coach: 'For clubs & coaches',
+      trust: 'Why trust it',
     },
     signIn: 'Sign in',
     cta: 'Apply for a club pilot',
-    /**
-     * Phone-width label for the nav button only. The full ask doesn't fit
-     * beside the lockup below ~640px and wraps out of its fixed-height button;
-     * the hero CTA sits directly underneath carrying the whole phrase, so the
-     * ask still reads in full on first screen.
-     */
     ctaShort: 'Apply',
+    locale: {
+      label: 'Language',
+      enShort: 'EN',
+      enLong: 'English',
+      ptShort: 'PT',
+      ptLong: 'Portuguese (Portugal)',
+    },
   },
 
   hero: {
-    eyebrow: 'Sprint kayak & canoe · Built first for paddling',
-    titleTop: 'Coach the athlete,',
-    titleBottom: 'not the average.',
-    body: 'OlympiaLabs measures every session against the athlete’s own history — not a table of averages that never met them. Boat motion at 833 Hz, GPS, video and body movement, read together.',
+    badge: 'Pilot clubs now onboarding',
+    eyebrow: 'For sprint kayak & canoe',
+    titleTop: 'Turn session data into',
+    titleBottom: 'clearer coaching.',
+    body: 'OlympiaLabs gives sprint kayak and canoe coaches a clearer post-session view of how each athlete moved, where a session changed and what to work on next. Boat motion, GPS, video and body movement, brought together in one review flow.',
     ctaPrimary: 'Apply for a club pilot',
-    ctaSecondary: 'See what it measures',
-    /**
-     * The hero figure is a synthetic waveform, so it says so. It may carry the
-     * two readouts that are properties of the hardware (six axes, 833 Hz) and
-     * no derived values — a fabricated "symmetry 96%" on this page of all
-     * pages would undo the argument the rest of it is making.
-     */
+    ctaSecondary: 'How coaches use it',
+    highlights: [
+      'Built around club coaching workflows',
+      'Compared against each athlete’s own recent sessions',
+      'Pilot clubs supported directly by our team',
+    ],
+    panel: {
+      eyebrow: 'Why clubs are piloting it',
+      title: 'A fuller session review that still leaves the coach in charge.',
+      points: [
+        {
+          title: 'See more than split times',
+          body: 'Review balance, stability and consistency alongside video and GPS.',
+        },
+        {
+          title: 'Keep context athlete by athlete',
+          body: 'Every session is measured against that paddler’s own recent work.',
+        },
+        {
+          title: 'Stay coach-led',
+          body: 'Findings arrive with the numbers behind them before any coaching decision is made.',
+        },
+      ],
+    },
     signal: {
-      aria: 'Illustration of the gyroscope roll-rate signal the sensor records',
-      /** `n` renders in ink, `t` in muted — split so the numeral can be picked out. */
+      aria: 'Illustration of a boat-motion trace recorded by the sensor',
       readouts: [
-        { n: '6', t: '-axis imu' },
+        { n: '6', t: ' axes' },
         { n: '833', t: ' Hz' },
       ],
-      caption: 'Illustrative — gyroscope roll-rate, the signal used to detect strokes.',
+      caption: 'Illustrative signal — based on the boat-motion trace used to detect strokes.',
     },
   },
 
   stats: {
-    label: 'At a glance',
+    label: 'Why clubs pay attention',
+    eyebrow: 'Why clubs pay attention',
+    title: 'A coaching tool, not another dashboard.',
+    body: 'OlympiaLabs is designed to earn time in the weekly workflow: faster review, better athlete context and clear visibility into what changed.',
     items: [
-      { v: '833 Hz', l: 'Six-axis boat motion' },
-      { v: 'L / R', l: 'Balance, stroke by stroke' },
-      { v: '0', l: 'Numbers invented by AI' },
-      { v: 'Pilot', l: 'Validating with clubs now' },
+      {
+        tag: 'Faster reviews',
+        title: 'Find the important shifts sooner',
+        body: 'Bring boat movement, video, GPS and session context into one place after training.',
+      },
+      {
+        tag: 'Athlete context',
+        title: 'Measure progress one athlete at a time',
+        body: 'Compare today with that athlete’s own recent baseline instead of a borrowed benchmark.',
+      },
+      {
+        tag: 'Coach confidence',
+        title: 'Keep evidence attached to the finding',
+        body: 'The platform surfaces conclusions with the numbers that produced them still in view.',
+      },
+      {
+        tag: 'Pilot support',
+        title: 'Start with guided onboarding',
+        body: 'Pilot clubs work directly with OlympiaLabs on setup, feedback and what comes next.',
+      },
     ],
   },
 
   proof: {
     eyebrow: 'See it working',
-    title: 'The system, in real conditions.',
-    body: 'No renders and no mock-ups — the sensor on a real boat, a real session, and the output a coach actually opens afterwards.',
-    /**
-     * Keyed by `PROOF_MEDIA[].key` in config.ts. Captions are written ahead of
-     * the footage: each one states plainly what the viewer is looking at, so
-     * nothing here implies a capability the clip doesn't show.
-     */
+    title: 'The product, in real training.',
+    body: 'Real kit, real sessions and real coach output — not renders, mock-ups or speculative screens.',
     captions: {
       sensor: {
         caption: 'The sensor, mounted on the boat.',
@@ -122,137 +156,137 @@ export const COPY = {
   },
 
   problem: {
-    eyebrow: 'The problem',
-    title: 'Speed and stroke rate tell you what happened. They don’t tell you how the athlete moved.',
-    body: 'A split says the session was slower. It doesn’t say the left side started giving way in the third interval, or that the boat got less settled as the athlete tired — or whether any of that is unusual for this particular paddler. That gap is where coaching decisions actually get made.',
+    eyebrow: 'The coaching gap',
+    title: 'When performance dips, split times rarely explain why.',
+    body: 'A slower interval tells you something changed. It does not tell you whether one side faded, whether the boat got less settled as fatigue built, or whether that pattern is normal for this athlete. That missing context is where coaches spend their time.',
   },
 
   loop: {
     eyebrow: 'How it works',
-    title: 'Capture. Compare. Explain. Decide.',
+    title: 'A simple path from capture to coaching.',
     steps: [
       {
         n: '01',
         name: 'Capture',
         kind: 'On the water',
-        body: 'The sensor records the boat’s motion at 833 Hz. The phone adds GPS, video and body movement. Everything is kept at full rate — nothing is thrown away or averaged on the way in.',
+        body: 'The athlete records the session with the boat sensor and phone. OlympiaLabs keeps the boat motion, GPS, video and body movement aligned for review afterwards.',
       },
       {
         n: '02',
         name: 'Compare',
-        kind: 'Against themselves',
-        body: 'Each session is measured against the athlete’s own recent sessions. There are no published norms for kayak technique, so OlympiaLabs doesn’t invent one to rank people against.',
+        kind: 'Against recent work',
+        body: 'Each session is read against the athlete’s own recent sessions, so the starting point is their normal, not a borrowed norm.',
       },
       {
         n: '03',
         name: 'Explain',
-        kind: 'In plain language',
-        body: 'Every statistic is computed in code. The AI puts it into words and decides what matters most — it never invents a number, and it never sees raw athlete data.',
+        kind: 'Coach-ready output',
+        body: 'Statistics are calculated in code. AI helps phrase and rank the findings, but it does not invent the numbers inside them.',
       },
       {
         n: '04',
         name: 'Decide',
-        kind: 'The coach’s call',
-        body: 'Findings reach the coach with the numbers that produced them attached. Accept them, adjust them, or throw them out.',
+        kind: 'Coach-led',
+        body: 'The coach reviews the findings with the evidence attached and decides what matters for the next session.',
       },
     ],
-    footLine: 'Every session then joins the baseline the next one is measured against',
-    footNote: 'That’s the loop: a rolling comparison against the athlete’s own recent work — not a model that claims to have learned them.',
+    footLine: 'Each new session extends the athlete’s recent baseline',
+    footNote: 'That baseline is a rolling view of recent work, not a model claiming to have learned the athlete.',
   },
 
   observes: {
-    eyebrow: 'What it observes',
-    title: 'The boat and the athlete, read together.',
+    eyebrow: 'What you can review',
+    title: 'A fuller picture of each session.',
     items: [
       {
         motif: 'boat',
         tag: 'Boat',
-        title: 'How the boat moves',
-        body: 'Acceleration and rotation on six axes, straight from the hull, 833 times a second. Pitch and roll — how the boat sits and how much it rocks — stroke by stroke.',
+        title: 'How the boat behaves',
+        body: 'OlympiaLabs records the hull’s acceleration and rotation on six axes, so pitch, roll and balance can be reviewed stroke by stroke.',
       },
       {
         motif: 'body',
         tag: 'Body',
         title: 'How the athlete moves',
-        body: 'The phone camera captures body movement through the session. Joint range of motion is worked out afterwards in the cloud — no motion-capture lab, no markers, no second operator.',
+        body: 'The phone camera captures body movement through the session, with joint range of motion worked out afterwards in the cloud.',
       },
       {
         motif: 'session',
         tag: 'Session',
         title: 'Everything on one timeline',
-        body: 'Motion, the GPS track and the video, aligned to the same clock. Scrub to the moment something changed and all three move with you.',
+        body: 'Motion, GPS and video stay on one timeline, so the moment something changed is easy to inspect.',
       },
       {
         motif: 'history',
         tag: 'History',
         title: 'How today compares to them',
-        body: 'Each session sits against the athlete’s own recent work — their balance, their cadence, their consistency. Change is measured from where they actually were.',
+        body: 'Each session sits against the athlete’s own recent work to show what truly moved for them.',
       },
     ],
   },
 
   coach: {
-    eyebrow: 'For coaches',
-    title: 'From numbers to decisions.',
-    body: 'The platform is built around the questions a coach actually asks — and it shows its working, so you can disagree with it.',
+    eyebrow: 'For clubs and coaches',
+    title: 'Review faster. Decide with more confidence.',
+    body: 'OlympiaLabs is built around the questions coaches already ask after training, while keeping the evidence visible so decisions stay coach-led.',
     questionsLabel: 'Questions it’s built to help answer',
     questions: [
-      'When in the session did technique start to go?',
-      'What changed between two sessions that should have been the same?',
+      'When in the session did technique start to slip?',
+      'What changed between two sessions that were meant to feel the same?',
       'Is this asymmetry persistent, or was it one bad day?',
-      'Is their consistency improving, or only their splits?',
-      'Which technical point is worth working on next?',
+      'Is the athlete getting more consistent, or only faster?',
+      'What is the next coaching point worth addressing?',
     ],
     points: [
       {
         tag: 'Coach-led',
-        title: 'The coach stays in command',
-        body: 'Findings are proposals, not instructions. Accept, adjust or discard them — with the numbers that produced them in plain sight.',
+        title: 'Support, not autopilot',
+        body: 'Findings arrive as proposals with the numbers attached. Use them, edit them or ignore them.',
       },
       {
-        tag: 'Focused',
-        title: 'Fewer metrics, more signal',
-        body: 'The platform surfaces what moved and where it moved, so review time goes on coaching instead of hunting through charts.',
+        tag: 'Efficient',
+        title: 'Spend less time hunting through charts',
+        body: 'The platform pulls meaningful changes to the surface so review time stays focused on athletes.',
       },
       {
-        tag: 'Grounded',
-        title: 'Compared to them, not to a norm',
-        body: 'There are no published norms for kayak biomechanics. Rather than borrow one from another sport, every comparison is against the athlete’s own recent sessions.',
+        tag: 'Relevant',
+        title: 'Benchmarked against the athlete, not a borrowed norm',
+        body: 'Because sprint paddling lacks agreed technique norms, OlympiaLabs compares each athlete to their own recent sessions instead.',
       },
       {
         tag: 'Private',
-        title: 'GDPR-first, by design',
-        body: 'Health and location data handled to European standards. AI coaching stays off until the athlete switches it on, and works without it.',
+        title: 'Ready for European clubs',
+        body: 'Health and location data are handled to European standards. AI coaching stays off until the athlete switches it on, and the platform still works without it.',
       },
     ],
   },
 
   pieces: {
-    eyebrow: 'The pieces',
-    title: 'Three parts, one workflow.',
+    eyebrow: 'What clubs use',
+    title: 'Everything needed for the workflow.',
     items: [
       {
         name: 'OlympiaLabs Sensor',
         where: 'On the boat',
-        body: 'A compact six-axis sensor that records the hull’s motion at the source, 833 times a second.',
+        body: 'Mounted on the boat to capture high-rate hull motion throughout the session.',
       },
       {
         name: 'OlympiaLabs App',
         where: 'On the phone',
-        body: 'Records the session — GPS, video and body movement — and syncs it to the platform over WiFi when the athlete lands.',
+        body: 'Used by the athlete to record GPS, video and body movement, then sync everything after landing.',
       },
       {
         name: 'Coach Platform',
         where: 'In the browser',
-        body: 'Sessions, findings, athlete history and workout planning, for the whole squad in one place.',
+        body: 'Where coaches review sessions, findings and athlete history for the squad in one place.',
       },
     ],
   },
 
   trust: {
-    eyebrow: 'What’s real',
-    title: 'What we measure, what we calculate, and what we don’t claim.',
-    body: 'The platform is built and running, and is now being validated with coaches and athletes in real training conditions. Until that work is done, the honest thing is to show exactly where every number comes from.',
+    eyebrow: 'Why coaches trust it',
+    title: 'Clear about what it does, and what it doesn’t.',
+    body: 'OlympiaLabs is live and being tested in real training. Until the pilot work is complete, the honest promise is simple: every number shown on the platform should have a clear source behind it.',
     columns: [
       {
         kind: 'Measured',
@@ -293,23 +327,22 @@ export const COPY = {
         ],
       },
     ],
-    closing: 'If a number isn’t in the first two columns, we’re not going to tell you it is.',
+    closing: 'If we can’t point to where a number came from, we won’t market it as if we can.',
   },
 
   pilot: {
-    eyebrow: 'Pilot programme',
-    title: 'Become an OlympiaLabs pilot club.',
-    body: 'We’re working with a small number of clubs, coaches and athletes to find out whether this holds up in real training — whether the measurements repeat, whether the feedback is clear, and whether it survives contact with how coaching actually works.',
-    benefitsLabel: 'Pilot clubs get',
+    eyebrow: 'Pilot clubs',
+    title: 'Bring OlympiaLabs into your training group.',
+    body: 'We’re onboarding a small number of clubs and coaches to test OlympiaLabs in real training, refine the review flow and learn what matters most in day-to-day coaching.',
+    benefitsLabel: 'Pilot clubs receive',
     benefits: [
-      'Early access to the sensor and the platform',
-      'Analysis of your athletes’ sessions',
-      'Technical and performance reports',
-      'Direct support throughout the evaluation',
-      'Real influence over what gets built next',
-      'Priority access to what comes after',
+      'Supported onboarding for coaches and athletes',
+      'Early access to the sensor and platform',
+      'Session analysis across your training group',
+      'Direct feedback into the product team',
+      'Priority access as OlympiaLabs rolls out',
     ],
-    note: 'No obligation to adopt anything commercially afterwards. We’d rather build this around what you find than around what we assumed.',
+    note: 'There’s no obligation to adopt it commercially afterwards. We’d rather prove the value in your environment first.',
     form: {
       name: { label: 'Your name', placeholder: 'Ana Silva' },
       email: { label: 'Email', placeholder: 'you@club.com' },
@@ -323,17 +356,17 @@ export const COPY = {
       consent: 'Email me about the OlympiaLabs pilot programme. I can unsubscribe anytime.',
       submit: 'Apply for a club pilot',
       submitting: 'Sending…',
-      fineprint: 'No spam · GDPR-compliant',
+      fineprint: 'Limited cohort · GDPR-compliant',
       errorGeneric: 'Something went wrong. Please try again.',
       errorNetwork: 'Network error — please check your connection and try again.',
       errorLocal: 'Netlify handles submissions — this will work once the site is deployed.',
-      successTitle: 'Application received.',
-      successBody: 'Thanks — we’ll read it properly and come back to you about next steps. Keep an eye on your inbox.',
+      successTitle: 'Pilot application received.',
+      successBody: 'Thanks — we’ll review it properly and come back to you with next steps.',
     },
   },
 
   footer: {
-    blurb: 'Session analysis for sprint kayak and canoe. Every athlete measured against their own history.',
+    blurb: 'Session review for sprint kayak and canoe, built around how each athlete actually moves.',
     columns: {
       product: 'Product',
       company: 'Company',
@@ -352,5 +385,369 @@ export const COPY = {
     skipToContent: 'Skip to content',
     primaryNav: 'Primary',
     footerNav: 'Footer',
+    languageSwitch: 'Language switch',
   },
-} as const
+}
+
+type Copy = typeof COPY_EN
+
+const COPY_PT: Copy = {
+  nav: {
+    links: {
+      observes: 'O que pode rever',
+      loop: 'Como funciona',
+      coach: 'Para clubes e treinadores',
+      trust: 'Porque confiar',
+    },
+    signIn: 'Entrar',
+    cta: 'Candidatar clube piloto',
+    ctaShort: 'Candidatar',
+    locale: {
+      label: 'Idioma',
+      enShort: 'EN',
+      enLong: 'Inglês',
+      ptShort: 'PT',
+      ptLong: 'Português (Portugal)',
+    },
+  },
+
+  hero: {
+    badge: 'Candidaturas abertas a clubes piloto',
+    eyebrow: 'Para kayak e canoa de velocidade',
+    titleTop: 'Transforme dados de treino em',
+    titleBottom: 'decisões mais claras.',
+    body: 'A OlympiaLabs dá aos treinadores de kayak e canoa de velocidade uma visão pós-sessão mais clara sobre como cada atleta se moveu, onde a sessão mudou e em que vale a pena trabalhar a seguir. Movimento do barco, GPS, vídeo e movimento corporal, reunidos num só fluxo de revisão.',
+    ctaPrimary: 'Candidatar clube piloto',
+    ctaSecondary: 'Como os treinadores a usam',
+    highlights: [
+      'Pensada para o trabalho diário dos clubes',
+      'Compara cada atleta com as suas sessões recentes',
+      'Clubes piloto acompanhados diretamente pela nossa equipa',
+    ],
+    panel: {
+      eyebrow: 'Porque é que os clubes a estão a testar',
+      title: 'Uma revisão de sessão mais completa, sem tirar o controlo ao treinador.',
+      points: [
+        {
+          title: 'Veja mais do que tempos parciais',
+          body: 'Reveja equilíbrio, estabilidade e consistência a par do vídeo e do GPS.',
+        },
+        {
+          title: 'Mantenha o contexto atleta a atleta',
+          body: 'Cada sessão é medida contra o trabalho recente desse próprio atleta.',
+        },
+        {
+          title: 'O treinador continua no comando',
+          body: 'As conclusões chegam com os números por trás delas antes de qualquer decisão técnica.',
+        },
+      ],
+    },
+    signal: {
+      aria: 'Ilustração de um traço de movimento do barco registado pelo sensor',
+      readouts: [
+        { n: '6', t: ' eixos' },
+        { n: '833', t: ' Hz' },
+      ],
+      caption: 'Sinal ilustrativo — baseado no traço de movimento do barco usado para detetar pagadas.',
+    },
+  },
+
+  stats: {
+    label: 'Porque é que os clubes prestam atenção',
+    eyebrow: 'Porque é que os clubes prestam atenção',
+    title: 'Uma ferramenta de treino, não apenas mais um painel.',
+    body: 'A OlympiaLabs foi desenhada para ganhar espaço no fluxo de trabalho semanal: revisão mais rápida, melhor contexto por atleta e visibilidade clara do que mudou.',
+    items: [
+      {
+        tag: 'Revisão rápida',
+        title: 'Encontre mais cedo as mudanças importantes',
+        body: 'Reúna movimento do barco, vídeo, GPS e contexto da sessão num só lugar depois do treino.',
+      },
+      {
+        tag: 'Contexto por atleta',
+        title: 'Meça a evolução atleta a atleta',
+        body: 'Compare o dia de hoje com a referência recente desse atleta, e não com uma referência externa.',
+      },
+      {
+        tag: 'Confiança',
+        title: 'Mantenha a evidência ligada à conclusão',
+        body: 'A plataforma mostra as conclusões juntamente com os números que as sustentam.',
+      },
+      {
+        tag: 'Acompanhamento piloto',
+        title: 'Comece com integração acompanhada',
+        body: 'Os clubes piloto trabalham diretamente com a OlympiaLabs na configuração, no feedback e no que vem a seguir.',
+      },
+    ],
+  },
+
+  proof: {
+    eyebrow: 'Veja a funcionar',
+    title: 'O produto, em treino real.',
+    body: 'Equipamento real, sessões reais e o ecrã que o treinador abre a seguir — não renderizações, maquetas ou ecrãs especulativos.',
+    captions: {
+      sensor: {
+        caption: 'O sensor, montado no barco.',
+        alt: 'O sensor OlympiaLabs fixo ao convés de um kayak de velocidade.',
+      },
+      session: {
+        caption: 'Uma sessão, tal como o atleta a regista.',
+        alt: 'Um atleta a remar enquanto o telemóvel grava a sessão.',
+      },
+      pose: {
+        caption: 'Movimento corporal, captado pela câmara do telemóvel.',
+        alt: 'Pontos de movimento corporal acompanhados sobre vídeo de um atleta.',
+      },
+      platform: {
+        caption: 'A sessão, tal como o treinador a abre depois.',
+        alt: 'A plataforma OlympiaLabs para treinadores a mostrar uma sessão gravada.',
+      },
+      finding: {
+        caption: 'Uma conclusão, exatamente como foi gerada — com números incluídos.',
+        alt: 'Uma conclusão de treino apresentada com as estatísticas que a sustentam.',
+      },
+    },
+  },
+
+  problem: {
+    eyebrow: 'A lacuna no treino',
+    title: 'Quando o rendimento desce, os tempos parciais raramente explicam porquê.',
+    body: 'Um intervalo mais lento diz-lhe que algo mudou. Não diz se um lado começou a ceder, se o barco ficou menos assente com a fadiga, ou se esse padrão é normal para este atleta. É nesse vazio que o treinador gasta tempo.',
+  },
+
+  loop: {
+    eyebrow: 'Como funciona',
+    title: 'Um caminho simples do registo à decisão técnica.',
+    steps: [
+      {
+        n: '01',
+        name: 'Registar',
+        kind: 'Na água',
+        body: 'O atleta regista a sessão com o sensor no barco e o telemóvel. A OlympiaLabs mantém movimento do barco, GPS, vídeo e movimento corporal alinhados para revisão posterior.',
+      },
+      {
+        n: '02',
+        name: 'Comparar',
+        kind: 'Face ao trabalho recente',
+        body: 'Cada sessão é lida contra as sessões recentes do próprio atleta, para que o ponto de partida seja o seu normal e não uma norma importada.',
+      },
+      {
+        n: '03',
+        name: 'Explicar',
+        kind: 'Leitura pronta para o treinador',
+        body: 'As estatísticas são calculadas em código. A IA ajuda a redigir e priorizar as conclusões, mas não inventa os números que lá aparecem.',
+      },
+      {
+        n: '04',
+        name: 'Decidir',
+        kind: 'Treinador no comando',
+        body: 'O treinador revê as conclusões com a evidência associada e decide o que interessa para a sessão seguinte.',
+      },
+    ],
+    footLine: 'Cada nova sessão alarga a base recente do atleta',
+    footNote: 'Essa base é uma janela móvel do trabalho recente, não um modelo que afirme ter aprendido o atleta.',
+  },
+
+  observes: {
+    eyebrow: 'O que pode rever',
+    title: 'Uma imagem mais completa de cada sessão.',
+    items: [
+      {
+        motif: 'boat',
+        tag: 'Barco',
+        title: 'Como o barco se comporta',
+        body: 'A OlympiaLabs regista a aceleração e a rotação do casco em seis eixos, para rever como o barco assenta e oscila, pagada a pagada.',
+      },
+      {
+        motif: 'body',
+        tag: 'Corpo',
+        title: 'Como o atleta se move',
+        body: 'A câmara do telemóvel capta o movimento corporal durante a sessão, com a amplitude articular calculada depois na nuvem.',
+      },
+      {
+        motif: 'session',
+        tag: 'Sessão',
+        title: 'Tudo na mesma linha temporal',
+        body: 'Movimento, GPS e vídeo ficam na mesma linha temporal, para que o momento em que algo mudou seja simples de inspecionar.',
+      },
+      {
+        motif: 'history',
+        tag: 'Histórico',
+        title: 'Como o treino de hoje se compara com esse atleta',
+        body: 'Cada sessão é colocada ao lado do trabalho recente do atleta para mostrar o que realmente mudou para ele.',
+      },
+    ],
+  },
+
+  coach: {
+    eyebrow: 'Para clubes e treinadores',
+    title: 'Reveja mais depressa. Decida com mais confiança.',
+    body: 'A OlympiaLabs foi construída em torno das perguntas que os treinadores já fazem depois do treino, mantendo a evidência visível para que a decisão continue a ser humana.',
+    questionsLabel: 'Perguntas a que foi pensada para responder',
+    questions: [
+      'Em que momento da sessão é que a técnica começou a cair?',
+      'O que mudou entre duas sessões que deviam ter sido semelhantes?',
+      'Esta assimetria é persistente ou foi apenas um mau dia?',
+      'O atleta está a ficar mais consistente, ou apenas mais rápido?',
+      'Qual é o próximo ponto técnico que vale a pena trabalhar?',
+    ],
+    points: [
+      {
+        tag: 'Treinador no comando',
+        title: 'Apoio, não piloto automático',
+        body: 'As conclusões chegam como propostas com os números anexados. Pode usá-las, ajustá-las ou ignorá-las.',
+      },
+      {
+        tag: 'Eficiente',
+        title: 'Passe menos tempo à procura em gráficos',
+        body: 'A plataforma traz as mudanças mais relevantes à superfície, para que o tempo de revisão continue focado nos atletas.',
+      },
+      {
+        tag: 'Relevante',
+        title: 'Comparado com o atleta, não com uma norma emprestada',
+        body: 'Como a canoagem de velocidade não tem normas técnicas consensuais, a OlympiaLabs compara cada atleta com as suas próprias sessões recentes.',
+      },
+      {
+        tag: 'Privado',
+        title: 'Preparada para clubes europeus',
+        body: 'Dados de saúde e localização são tratados segundo padrões europeus. A IA de apoio ao treino fica desligada até o atleta a ativar, e a plataforma continua a funcionar sem ela.',
+      },
+    ],
+  },
+
+  pieces: {
+    eyebrow: 'O que o clube usa',
+    title: 'Tudo o que é preciso para o fluxo de trabalho.',
+    items: [
+      {
+        name: 'Sensor OlympiaLabs',
+        where: 'No barco',
+        body: 'Montado no barco para captar o movimento do casco em alta frequência ao longo da sessão.',
+      },
+      {
+        name: 'App OlympiaLabs',
+        where: 'No telemóvel',
+        body: 'Usada pelo atleta para registar GPS, vídeo e movimento corporal, e sincronizar tudo depois de chegar a terra.',
+      },
+      {
+        name: 'Plataforma do treinador',
+        where: 'No navegador',
+        body: 'Onde os treinadores revêm sessões, conclusões e histórico dos atletas num só lugar.',
+      },
+    ],
+  },
+
+  trust: {
+    eyebrow: 'Porque é que os treinadores confiam',
+    title: 'Clara sobre o que faz, e sobre o que não faz.',
+    body: 'A OlympiaLabs está ativa e a ser testada em treino real. Até o trabalho piloto estar concluído, a promessa honesta é simples: cada número mostrado na plataforma deve ter uma origem clara por trás.',
+    columns: [
+      {
+        kind: 'Medido',
+        note: 'Captado fisicamente',
+        items: [
+          'Aceleração e rotação, três eixos, 833 Hz — a partir do sensor no barco',
+          'Posição GPS e velocidade, cerca de uma vez por segundo — a partir do telemóvel',
+          'Vídeo e pontos de movimento corporal — a partir da câmara do telemóvel',
+        ],
+      },
+      {
+        kind: 'Calculado',
+        note: 'Calculado em código, sem ML',
+        items: [
+          'Deteção, contagem e taxa de pagadas',
+          'Equilíbrio esquerda / direita',
+          'Inclinação longitudinal e lateral do barco',
+          'Consistência da taxa de pagada',
+          'Velocidade, distância e ritmo — derivados do GPS, não do sensor',
+        ],
+      },
+      {
+        kind: 'Estimado por IA',
+        note: 'Onde entram modelos',
+        items: [
+          'Pontos corporais obtidos a partir do vídeo, e a amplitude articular derivada deles — analisados depois da sessão, não em direto',
+          'A redação e a priorização das conclusões. Os números dentro delas são calculados, nunca gerados',
+        ],
+      },
+      {
+        kind: 'Não afirmado',
+        note: 'O que a OlympiaLabs não diz fazer',
+        items: [
+          'Sem força, potência ou watts — não existe sensor de força no barco',
+          'Sem frequência cardíaca',
+          'Sem rumo ou direção — um sensor de seis eixos não consegue mantê-los',
+          'Nada foi ainda validado contra uma medição de referência. É para isso que serve o piloto',
+        ],
+      },
+    ],
+    closing: 'Se não conseguimos apontar a origem de um número, não o vamos vender como se conseguíssemos.',
+  },
+
+  pilot: {
+    eyebrow: 'Clubes piloto',
+    title: 'Leve a OlympiaLabs para o seu grupo de treino.',
+    body: 'Estamos a integrar um pequeno número de clubes e treinadores para testar a OlympiaLabs em treino real, afinar o fluxo de revisão e perceber o que mais conta no dia a dia do treino.',
+    benefitsLabel: 'Os clubes piloto recebem',
+    benefits: [
+      'Integração acompanhada para treinadores e atletas',
+      'Acesso antecipado ao sensor e à plataforma',
+      'Análise de sessões do seu grupo de treino',
+      'Contacto direto com a equipa de produto',
+      'Acesso prioritário à medida que a OlympiaLabs avança',
+    ],
+    note: 'Não há obrigação de adoção comercial depois. Preferimos primeiro provar o valor no seu contexto.',
+    form: {
+      name: { label: 'Nome', placeholder: 'Ana Silva' },
+      email: { label: 'Email', placeholder: 'you@club.com' },
+      club: { label: 'Clube', placeholder: 'Clube Náutico de Viana' },
+      role: {
+        label: 'Função',
+        options: ['Treinador', 'Atleta', 'Direção do clube', 'Outra'],
+      },
+      athletes: { label: 'Atletas envolvidos (aprox.)', placeholder: '8' },
+      message: { label: 'Algo que devamos saber? (opcional)', placeholder: 'O que gostaria de obter de um piloto.' },
+      consent: 'Quero receber emails sobre o programa piloto da OlympiaLabs. Posso cancelar a qualquer momento.',
+      submit: 'Candidatar clube piloto',
+      submitting: 'A enviar…',
+      fineprint: 'Vagas limitadas · RGPD',
+      errorGeneric: 'Algo correu mal. Tente novamente.',
+      errorNetwork: 'Erro de rede — verifique a ligação e tente novamente.',
+      errorLocal: 'O Netlify trata das submissões — isto funcionará quando o site estiver publicado.',
+      successTitle: 'Candidatura recebida.',
+      successBody: 'Obrigado — vamos rever o pedido com atenção e responder com os próximos passos.',
+    },
+  },
+
+  footer: {
+    blurb: 'Revisão de sessões para kayak e canoa de velocidade, construída em torno da forma como cada atleta realmente se move.',
+    columns: {
+      product: 'Produto',
+      company: 'Empresa',
+      legal: 'Legal',
+    },
+    links: {
+      about: 'Sobre',
+      contact: 'Contacto',
+      privacy: 'Privacidade',
+      terms: 'Termos',
+    },
+    madeIn: 'Feito em',
+  },
+
+  a11y: {
+    skipToContent: 'Saltar para o conteúdo',
+    primaryNav: 'Principal',
+    footerNav: 'Rodapé',
+    languageSwitch: 'Seleção de idioma',
+  },
+}
+
+export const COPY: Record<Locale, Copy> = {
+  en: COPY_EN,
+  pt: COPY_PT,
+}
+
+export function getCopy(locale: Locale = DEFAULT_LOCALE): Copy {
+  return COPY[locale]
+}

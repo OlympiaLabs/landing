@@ -9,9 +9,11 @@
  * Anything added here must match the system as built. See the claims block at
  * the top of `copy.ts` before touching the lists.
  */
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath } from '../i18n'
 
-const c = COPY.trust
+const locale = getLocaleFromPath(Astro.url.pathname)
+const c = getCopy(locale).trust
 ---
 
 <section id="trust" class="scroll-mt-20 bg-muted/20">

@@ -1,11 +1,17 @@
 ---
 import BrandLockup from './BrandLockup.astro'
 import { NAV_LINKS, SIGN_IN_URL } from '../config'
-import { COPY } from '../copy'
+import { getCopy } from '../copy'
+import { getLocaleFromPath, getLocalizedPath } from '../i18n'
+
+const locale = getLocaleFromPath(Astro.url.pathname)
+const copy = getCopy(locale)
+const englishHref = getLocalizedPath('en', Astro.url.pathname)
+const portugueseHref = getLocalizedPath('pt', Astro.url.pathname)
 ---
 
 <header class="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-md">
-  <nav class="wrap flex h-16 items-center justify-between gap-6" aria-label={COPY.a11y.primaryNav}>
+  <nav class="wrap flex h-16 items-center justify-between gap-6" aria-label={copy.a11y.primaryNav}>
     <BrandLockup href="#top" size="sm" />
 
     <div class="hidden items-center gap-8 md:flex">
@@ -15,25 +21,50 @@ import { COPY } from '../copy'
             href={link.href}
             class="font-mono text-[0.72rem] uppercase tracking-label text-muted-foreground transition-colors hover:text-foreground"
           >
-            {COPY.nav.links[link.key]}
+            {copy.nav.links[link.key]}
           </a>
         ))
       }
     </div>
 
     <div class="flex items-center gap-2 sm:gap-3">
+      <div
+        role="group"
+        aria-label={copy.a11y.languageSwitch}
+        class="inline-flex items-center gap-1 font-mono text-[0.68rem] uppercase tracking-label text-muted-foreground"
+      >
+        <a
+          href={englishHref}
+          lang="en"
+          hreflang="en"
+          title={copy.nav.locale.enLong}
+          class:list={['transition-colors hover:text-foreground', locale === 'en' && 'text-foreground']}
+        >
+          {copy.nav.locale.enShort}
+        </a>
+        <span aria-hidden="true">/</span>
+        <a
+          href={portugueseHref}
+          lang="pt-PT"
+          hreflang="pt-PT"
+          title={copy.nav.locale.ptLong}
+          class:list={['transition-colors hover:text-foreground', locale === 'pt' && 'text-foreground']}
+        >
+          {copy.nav.locale.ptShort}
+        </a>
+      </div>
       <a
         href={SIGN_IN_URL}
         class="hidden text-sm font-medium text-foreground/80 transition-colors hover:text-foreground sm:inline-flex"
       >
-        {COPY.nav.signIn}
+        {copy.nav.signIn}
       </a>
       <a
         href="#pilot"
         class="inline-flex h-9 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
       >
-        <span class="sm:hidden">{COPY.nav.ctaShort}</span>
-        <span class="hidden sm:inline">{COPY.nav.cta}</span>
+        <span class="sm:hidden">{copy.nav.ctaShort}</span>
+        <span class="hidden sm:inline">{copy.nav.cta}</span>
       </a>
     </div>
   </nav>
