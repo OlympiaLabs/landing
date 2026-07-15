@@ -1,15 +1,28 @@
 ---
+/**
+ * Section order carries the argument: the promise, then proof it exists, then
+ * the problem it answers, how it works, what it sees, what a coach gets, the
+ * parts, where every number comes from — and only then the ask.
+ *
+ * The light → muted → dark rhythm is structure, not theming. `Problem` and
+ * `Pilot` are the two dark bands and set the page's cadence; check it still
+ * alternates before reordering anything. `Proof` renders nothing until real
+ * media is configured, and the rhythm holds either way.
+ */
 import Base from '../layouts/Base.astro'
 import Nav from '../components/Nav.astro'
 import Hero from '../components/Hero.astro'
-import Stats from '../components/Stats.astro'
-import Difference from '../components/Difference.astro'
-import Features from '../components/Features.astro'
-import System from '../components/System.astro'
-import Integrated from '../components/Integrated.astro'
-import Waitlist from '../components/Waitlist.astro'
-import Footer from '../components/Footer.astro'
 import Waterline from '../components/Waterline.astro'
+import Stats from '../components/Stats.astro'
+import Proof from '../components/Proof.astro'
+import Problem from '../components/Problem.astro'
+import Loop from '../components/Loop.astro'
+import Observes from '../components/Observes.astro'
+import Coach from '../components/Coach.astro'
+import Pieces from '../components/Pieces.astro'
+import Trust from '../components/Trust.astro'
+import Pilot from '../components/Pilot.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <Base>
@@ -18,11 +31,14 @@ import Waterline from '../components/Waterline.astro'
     <Hero />
     <Waterline />
     <Stats />
-    <Difference />
-    <Features />
-    <System />
-    <Integrated />
-    <Waitlist />
+    <Proof />
+    <Problem />
+    <Loop />
+    <Observes />
+    <Coach />
+    <Pieces />
+    <Trust />
+    <Pilot />
   </main>
   <Footer />
 </Base>

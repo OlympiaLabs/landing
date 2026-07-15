@@ -1,0 +1,3 @@
+# Real footage for the Proof section. Drop files here, then point a
+# PROOF_MEDIA entry in src/config.ts at one — the section renders only the
+# slots that have a `src`, and hides itself entirely while none do.

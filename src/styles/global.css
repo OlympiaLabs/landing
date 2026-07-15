@@ -26,6 +26,9 @@
 
   /* Near-black brand ink for the dramatic full-bleed bands. */
   .dark {
+    /* The pilot form lives on a dark band — this is what makes the browser render
+       its checkbox, select and scrollbars to match instead of blazing white. */
+    color-scheme: dark;
     --background: 0 0% 6%;
     --foreground: 0 0% 98%;
     --card: 0 0% 9%;
@@ -138,12 +141,25 @@
   }
 
   /* Progressive scroll reveal: visible by default; animates in where the browser
-     supports scroll-driven animations and motion is allowed. */
+     supports scroll-driven animations and motion is allowed.
+
+     Two things here are deliberate and load-bearing — this rule hides content,
+     so a mistake in it costs a blank section rather than a missing flourish:
+
+     1. Longhands, not the `animation` shorthand. lightningcss folds an adjacent
+        `animation-timeline` into the shorthand (`animation: … fade-up view()`),
+        which Chrome rejects outright — dropping the animation while any static
+        `opacity: 0` survives. Longhands give it nothing to fold into.
+     2. The hidden state comes from `fade-up`'s own `from` keyframe via
+        `backwards` fill, never from a standalone `opacity: 0`. If the animation
+        fails to apply for any reason, the element just stays visible. */
   @media (prefers-reduced-motion: no-preference) {
     @supports (animation-timeline: view()) {
       .reveal {
-        opacity: 0;
-        animation: fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        animation-name: fade-up;
+        animation-duration: 0.9s;
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+        animation-fill-mode: both;
         animation-timeline: view();
         animation-range: entry 0% cover 22%;
       }

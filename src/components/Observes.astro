@@ -1,0 +1,34 @@
+---
+import Motif from './Motif.astro'
+import { COPY } from '../copy'
+
+const c = COPY.observes
+---
+
+<section id="observes" class="scroll-mt-20">
+  <div class="wrap py-24 md:py-32">
+    <div class="max-w-2xl">
+      <p class="label-caps">{c.eyebrow}</p>
+      <h2
+        class="mt-5 text-[clamp(1.8rem,3.4vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-foreground"
+      >
+        {c.title}
+      </h2>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 border-l border-t border-border sm:grid-cols-2 lg:grid-cols-4">
+      {
+        c.items.map((f) => (
+          <article class="reveal group flex flex-col gap-5 border-b border-r border-border p-7 transition-colors hover:bg-muted/40 md:p-9">
+            <Motif name={f.motif} />
+            <div class="flex flex-col gap-2.5">
+              <p class="font-mono text-[0.66rem] font-medium uppercase tracking-label text-primary">{f.tag}</p>
+              <h3 class="text-xl font-semibold tracking-tight text-foreground">{f.title}</h3>
+              <p class="text-[0.95rem] leading-relaxed text-muted-foreground">{f.body}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
