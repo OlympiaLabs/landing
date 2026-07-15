@@ -1,6 +1,6 @@
 # Netlify build configuration for the OlympiaLabs landing site.
-# Static Astro output — no adapter needed. The waitlist uses Netlify Forms
-# (the form is named "waitlist"; detected automatically at deploy time).
+# Static Astro output — no adapter needed. Pilot applications use Netlify Forms
+# (the form is named "pilot"; detected automatically at deploy time).
 
 [build]
   command = "npm run build"

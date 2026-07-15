@@ -1,5 +1,6 @@
 ---
 import BrandMark from './BrandMark.astro'
+import { COPY } from '../copy'
 
 /**
  * Mark + wordmark. The wordmark reuses the LogoV1 split: "Olympia" bold,
@@ -17,7 +18,7 @@ const {
   size = 'md',
   tagline = false,
   href = null,
-  ariaLabel = 'OlympiaLabs — home',
+  ariaLabel = COPY.brand.home,
 } = Astro.props
 
 const markSize = { sm: 'h-7', md: 'h-9', lg: 'h-12' }[size]
@@ -37,7 +38,7 @@ const Tag = href ? 'a' : 'div'
     {
       tagline && (
         <span class="mt-1.5 font-mono text-[0.55rem] font-medium uppercase tracking-wide2 text-primary">
-          Speed. Precision. Reliability.
+          {COPY.brand.tagline}
         </span>
       )
     }

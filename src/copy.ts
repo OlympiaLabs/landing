@@ -35,6 +35,16 @@
  */
 
 export const COPY = {
+  /**
+   * "Olympia" / "Labs" stay in the markup — they're the wordmark's type
+   * treatment, not prose. Everything a translator would touch lives here.
+   */
+  brand: {
+    tagline: 'Speed. Precision. Reliability.',
+    /** Accessible name for the lockup wherever it links home. */
+    home: 'OlympiaLabs — home',
+  },
+
   nav: {
     /** Keyed by `NAV_LINKS[].key` in config.ts. */
     links: {
@@ -316,6 +326,7 @@ export const COPY = {
       club: { label: 'Club', placeholder: 'Clube Náutico de Viana' },
       role: {
         label: 'Your role',
+        placeholder: 'Select…',
         options: ['Coach', 'Athlete', 'Club director', 'Other'],
       },
       athletes: { label: 'Athletes involved (approx.)', placeholder: '8' },

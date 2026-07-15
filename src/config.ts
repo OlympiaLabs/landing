@@ -13,7 +13,6 @@ export const SIGN_IN_URL = `${APP_URL.replace(/\/$/, '')}/login`
 export const SITE = {
   name: 'OlympiaLabs',
   domain: 'olympialabs.eu',
-  tagline: 'SPEED. PRECISION. RELIABILITY.',
   title: 'OlympiaLabs — Coach the athlete, not the average.',
   description:
     'OlympiaLabs measures sprint kayak and canoe sessions at 833 Hz — boat motion, GPS, video and body movement — and compares every session against the athlete’s own history. Findings are computed in code, never invented. Now recruiting pilot clubs.',

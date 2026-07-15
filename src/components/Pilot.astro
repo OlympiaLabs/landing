@@ -57,7 +57,6 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
           data-netlify="true"
           data-netlify-honeypot="bot-field"
           class="flex flex-col gap-6"
-          novalidate
           data-msg-submitting={f.submitting}
           data-msg-local={f.errorLocal}
           data-msg-generic={f.errorGeneric}
@@ -107,7 +106,13 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
 
             <div>
               <label for="pilot-role" class={labelClass}>{f.role.label}</label>
+              <!--
+                The empty first option is what makes `required` reachable:
+                without it the browser pre-selects "Coach" and every untouched
+                form submits as one, which is the answer we most need to be real.
+              -->
               <select id="pilot-role" name="role" required class={fieldClass}>
+                <option value="" disabled selected>{f.role.placeholder}</option>
                 {f.role.options.map((o) => <option value={o}>{o}</option>)}
               </select>
             </div>
@@ -217,8 +222,8 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
       const trap = form.querySelector('input[name="bot-field"]') as HTMLInputElement | null
       if (trap && trap.value) return
 
-      // `novalidate` is set so this error slot owns the messaging, but the
-      // browser's own constraint UI is still what gates the submit.
+      // Belt and braces: without `novalidate` the browser already gates this
+      // event, so this only fires if a constraint is added programmatically.
       if (!form.reportValidity()) return
 
       if (isLocal) {

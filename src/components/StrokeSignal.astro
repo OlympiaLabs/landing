@@ -54,7 +54,7 @@ const markerX = 6 // square marker rides the axis at the first stroke
 ---
 
 <figure class={`relative ${className}`} aria-label={c.aria}>
-  <svg viewBox={`0 0 ${W} ${H}`} class="w-full overflow-visible" role="img" aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} class="w-full overflow-visible" aria-hidden="true">
     <!-- waterline axis (ink) with a red segment, echoing the logo -->
     <line x1="0" y1={baseline} x2={W} y2={baseline} class="stroke-border" stroke-width="1" />
     <line x1="0" y1={baseline} x2={periodPx * 0.62} y2={baseline} class="stroke-primary" stroke-width="1.5" />
