@@ -96,16 +96,18 @@ const c = getCopy(locale).hero
                 {c.signal.eyebrow}
               </p>
 
-              <div class="flex flex-wrap gap-2">
-                {
-                  c.signal.readouts.map((readout) => (
-                    <span class="rounded-full border border-border bg-background/90 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-label">
-                      <span class="text-foreground">{readout.n}</span>
-                      <span class="text-muted-foreground">{readout.t}</span>
-                    </span>
-                  ))
-                }
-              </div>
+              {
+                c.signal.readouts.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {c.signal.readouts.map((readout) => (
+                      <span class="rounded-full border border-border bg-background/90 px-3 py-1 font-mono text-[0.62rem] uppercase tracking-label">
+                        <span class="text-foreground">{readout.n}</span>
+                        <span class="text-muted-foreground">{readout.t}</span>
+                      </span>
+                    ))}
+                  </div>
+                )
+              }
             </div>
 
             <StrokeSignal class="mt-4" />
