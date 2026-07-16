@@ -23,6 +23,20 @@ const alternates = [
   { href: new URL(getLocalizedPath('en', Astro.url.pathname), Astro.site).href, hreflang: LOCALES.en.lang },
   { href: new URL(getLocalizedPath('pt', Astro.url.pathname), Astro.site).href, hreflang: LOCALES.pt.lang },
 ]
+
+/**
+ * Cookieless analytics — off unless configured, so no tag ships by accident.
+ *
+ * Deliberately vendor-neutral: Plausible reads `data-domain`, Umami reads
+ * `data-website-id`, and each ignores the other's attribute, so setting the
+ * pair for one provider is enough. Both count without cookies and without
+ * storing personal data on the device, which is why there is no consent
+ * banner here — that is a property of the tool, so if you ever swap in one
+ * that sets cookies, the banner question comes back with it.
+ */
+const analyticsSrc = import.meta.env.PUBLIC_ANALYTICS_SRC
+const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN
+const analyticsWebsiteId = import.meta.env.PUBLIC_ANALYTICS_WEBSITE_ID
 ---
 
 <!doctype html>
@@ -57,6 +71,18 @@ const alternates = [
     <meta name="twitter:image" content={ogImage} />
 
     <meta name="generator" content={Astro.generator} />
+
+    {
+      analyticsSrc && (
+        <script
+          is:inline
+          defer
+          src={analyticsSrc}
+          data-domain={analyticsDomain || undefined}
+          data-website-id={analyticsWebsiteId || undefined}
+        />
+      )
+    }
   </head>
   <body class="min-h-screen">
     <a

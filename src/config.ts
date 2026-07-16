@@ -41,6 +41,7 @@ export function getSite(locale: Locale = DEFAULT_LOCALE): Site {
 
 /** Anchor targets — shared by the nav and the footer's Product column. */
 export const NAV_LINKS = [
+  { key: 'trust', href: '#trust' },
   { key: 'coach', href: '#coach' },
   { key: 'observes', href: '#observes' },
   { key: 'loop', href: '#loop' },

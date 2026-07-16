@@ -11,6 +11,14 @@ const siteMeta = getSite(locale)
 
 // The Product column mirrors the nav rather than restating it — renaming a
 // section used to mean editing this file and config.ts in step.
+//
+// A link whose page does not exist yet ships with an empty `href` and is
+// filtered out below, along with any column that empties completely. Same
+// contract as PROOF_MEDIA in config.ts: the slot stays written and waiting,
+// and the page renders nothing rather than something hollow. It matters more
+// than usual here — these were `href="#"`, and dead Privacy/Terms links sat
+// directly under a form asserting "GDPR-compliant". Set the href when the page
+// is real, and the column comes back on its own.
 const columns = [
   {
     title: c.columns.product,
@@ -22,18 +30,20 @@ const columns = [
   {
     title: c.columns.company,
     links: [
-      { href: '#', label: c.links.about },
+      { href: '', label: c.links.about },
       { href: `mailto:${siteMeta.contactEmail}`, label: c.links.contact },
     ],
   },
   {
     title: c.columns.legal,
     links: [
-      { href: '#', label: c.links.privacy },
-      { href: '#', label: c.links.terms },
+      { href: '', label: c.links.privacy },
+      { href: '', label: c.links.terms },
     ],
   },
 ]
+  .map((col) => ({ ...col, links: col.links.filter((l) => l.href !== '') }))
+  .filter((col) => col.links.length > 0)
 
 const year = new Date().getFullYear()
 ---
@@ -46,7 +56,13 @@ const year = new Date().getFullYear()
         <p class="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">{c.blurb}</p>
       </div>
 
-      <nav class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7" aria-label={copy.a11y.footerNav}>
+      <nav
+        class:list={[
+          'grid grid-cols-2 gap-8 md:col-span-7',
+          columns.length >= 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2',
+        ]}
+        aria-label={copy.a11y.footerNav}
+      >
         {
           columns.map((col) => (
             <div>
