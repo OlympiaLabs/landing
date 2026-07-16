@@ -13,7 +13,7 @@ import { DEFAULT_LOCALE, type Locale } from './i18n'
  * argument is that we say where every number comes from, so a loose line here
  * costs more than it would on an ordinary marketing site.
  *
- * MEASURED   acceleration + angular velocity, 3-axis, 833 Hz (LSM6DS3TR-C,
+ * MEASURED   acceleration + angular velocity, high-rate 3-axis (LSM6DS3TR-C,
  *            ±4 g / ±500 dps) · GPS position + speed ~1 Hz (phone) · video +
  *            2D pose landmarks (phone)
  * CALCULATED stroke detect/count/rate, L/R balance, pitch + roll, stroke-rate
@@ -66,9 +66,9 @@ const COPY_EN = {
     ctaPrimary: 'Join the waitlist',
     ctaSecondary: 'See coach benefits',
     highlights: [
-      'Boat motion + body movement together',
-      'Earlier signs of fatigue-related drift',
-      'Clearer next technique priorities',
+      'Boat motion and body movement analysed together',
+      'Detect earlier signs of fatigue-related drift',
+      'Clearer next technical exercises to do for stronger performance',
     ],
     panel: {
       eyebrow: 'What coaches get from it',
@@ -89,12 +89,9 @@ const COPY_EN = {
       ],
     },
     signal: {
-      eyebrow: 'Backed by 833 Hz boat-motion capture',
+      eyebrow: 'Backed by high-rate boat-motion capture',
       aria: 'Illustration of boat-motion change highlighted by the sensor',
-      readouts: [
-        { n: '6', t: ' axes' },
-        { n: '833', t: ' Hz' },
-      ],
+      readouts: [],
       caption: 'Illustration of the kind of boat-motion change the sensor helps coaches inspect after training.',
     },
   },
@@ -108,7 +105,7 @@ const COPY_EN = {
       {
         tag: 'Boat + body view',
         title: 'See the boat and the athlete together',
-        body: 'Review 833 Hz boat motion alongside body-movement analysis from phone video to understand technique changes with more context.',
+        body: 'Review high-rate boat motion alongside body-movement analysis from phone video to understand technique changes with more context.',
       },
       {
         tag: 'Earlier fatigue cues',
@@ -293,7 +290,7 @@ const COPY_EN = {
         kind: 'Measured',
         note: 'Physically sensed',
         items: [
-          'Acceleration and rotation, three axes, 833 Hz — from the boat sensor',
+          'Acceleration and rotation, three axes — from the boat sensor',
           'GPS position and speed, about once a second — from the phone',
           'Video and body-movement landmarks — from the phone camera',
         ],
@@ -323,7 +320,7 @@ const COPY_EN = {
         items: [
           'No force, power or watts — there is no force sensor on the boat',
           'No heart rate',
-          'No heading or direction — a six-axis sensor cannot hold one',
+          'No heading or direction',
           'Nothing is validated against ground truth yet. That validation work is still ongoing',
         ],
       },
@@ -419,9 +416,9 @@ const COPY_PT: Copy = {
     ctaPrimary: 'Entrar na lista de espera',
     ctaSecondary: 'Ver vantagens para treinadores',
     highlights: [
-      'Movimento do barco + movimento corporal',
-      'Sinais de fadiga detetados mais cedo',
-      'Próximas prioridades técnicas mais claras',
+      'Movimento do barco e movimento corporal analisados em conjunto',
+      'Detecção de sinais de fadiga mais cedo',
+      'Escolha mais clara e precisa de quais exercícios técnicos fazer para melhorar a performance',
     ],
     panel: {
       eyebrow: 'O que o treinador ganha',
@@ -442,12 +439,9 @@ const COPY_PT: Copy = {
       ],
     },
     signal: {
-      eyebrow: 'Suportado por captação do barco a 833 Hz',
+      eyebrow: 'Suportado por captação do barco em alta frequência',
       aria: 'Ilustração de uma alteração no movimento do barco destacada pelo sensor',
-      readouts: [
-        { n: '6', t: ' eixos' },
-        { n: '833', t: ' Hz' },
-      ],
+      readouts: [],
       caption: 'Ilustração do tipo de alteração no movimento do barco que o sensor ajuda o treinador a inspecionar depois do treino.',
     },
   },
@@ -461,7 +455,7 @@ const COPY_PT: Copy = {
       {
         tag: 'Barco + corpo',
         title: 'Veja o barco e o atleta em conjunto',
-        body: 'Reveja o movimento do barco a 833 Hz juntamente com a análise do movimento corporal a partir do vídeo no telemóvel para perceber melhor as mudanças técnicas.',
+        body: 'Reveja o movimento do barco em alta frequência juntamente com a análise do movimento corporal a partir do vídeo no telemóvel para perceber melhor as mudanças técnicas.',
       },
       {
         tag: 'Sinais de fadiga',
@@ -646,7 +640,7 @@ const COPY_PT: Copy = {
         kind: 'Medido',
         note: 'Captado fisicamente',
         items: [
-          'Aceleração e rotação, três eixos, 833 Hz — a partir do sensor no barco',
+          'Aceleração e rotação, três eixos — a partir do sensor no barco',
           'Posição GPS e velocidade, cerca de uma vez por segundo — a partir do telemóvel',
           'Vídeo e pontos de movimento corporal — a partir da câmara do telemóvel',
         ],
@@ -676,7 +670,7 @@ const COPY_PT: Copy = {
         items: [
           'Sem força, potência ou watts — não existe sensor de força no barco',
           'Sem frequência cardíaca',
-          'Sem rumo ou direção — um sensor de seis eixos não consegue mantê-los',
+          'Sem rumo ou direção',
           'Nada foi ainda validado contra uma medição de referência. Esse trabalho de validação ainda está em curso',
         ],
       },
