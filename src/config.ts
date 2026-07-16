@@ -17,7 +17,7 @@ const SITE_EN = {
   tagline: 'Better coaching, athlete by athlete.',
   title: 'OlympiaLabs — Clearer coaching for sprint kayak and canoe.',
   description:
-    'OlympiaLabs helps sprint kayak and canoe coaches review sessions with more context: boat motion, GPS, video and body movement, compared against each athlete’s own recent history. Now onboarding pilot clubs.',
+    'OlympiaLabs pairs precision boat-motion capture with body-movement analysis from phone video and athlete-specific session review for sprint kayak and canoe coaches. Spot earlier fatigue-related drift, focus the right technique priority, and join the waitlist for early access.',
   location: 'Viana do Castelo, Portugal',
   contactEmail: 'hello@olympialabs.eu',
 }
@@ -30,7 +30,7 @@ const SITE_PT: Site = {
   tagline: 'Melhor treino, atleta a atleta.',
   title: 'OlympiaLabs — Mais clareza para treinar kayak e canoa de velocidade.',
   description:
-    'A OlympiaLabs ajuda treinadores de kayak e canoa de velocidade a rever sessões com mais contexto: movimento do barco, GPS, vídeo e movimento corporal, comparados com o histórico recente de cada atleta. Estamos a receber clubes piloto.',
+    'A OlympiaLabs combina captação precisa do movimento do barco com análise de movimento corporal a partir de vídeo no telemóvel e revisão de sessão ajustada a cada atleta para treinadores de kayak e canoa de velocidade. Detete mais cedo sinais de fadiga, foque a prioridade técnica certa e entre na lista de espera para acesso antecipado.',
   location: 'Viana do Castelo, Portugal',
   contactEmail: 'hello@olympialabs.eu',
 }
@@ -41,10 +41,9 @@ export function getSite(locale: Locale = DEFAULT_LOCALE): Site {
 
 /** Anchor targets — shared by the nav and the footer's Product column. */
 export const NAV_LINKS = [
+  { key: 'coach', href: '#coach' },
   { key: 'observes', href: '#observes' },
   { key: 'loop', href: '#loop' },
-  { key: 'coach', href: '#coach' },
-  { key: 'trust', href: '#trust' },
 ] as const
 
 /**
