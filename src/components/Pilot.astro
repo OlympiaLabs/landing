@@ -1,11 +1,9 @@
 ---
 /**
- * The conversion band: a pilot-club application, not a waitlist signup.
+ * The conversion band: a waitlist signup.
  *
  * NOTE FOR DEPLOY — Netlify detects forms at build time from the rendered HTML,
- * keyed on `name`. This form is `pilot`; the old `waitlist` form will stop
- * receiving entries once this ships, though its past submissions stay in the
- * dashboard under that name. Export them first if they matter.
+ * keyed on `name`. This form is `waitlist`.
  */
 import { getCopy } from '../copy'
 import { getLocaleFromPath } from '../i18n'
@@ -17,9 +15,11 @@ const f = c.form
 const fieldClass =
   'h-12 w-full rounded-md border border-input bg-transparent px-4 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
 const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label text-muted-foreground'
+const textareaClass =
+  'w-full rounded-md border border-input bg-transparent px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
 ---
 
-<section id="pilot" class="dark scroll-mt-20 bg-background text-foreground">
+<section id="waitlist" class="dark scroll-mt-20 bg-background text-foreground">
   <div class="wrap py-24 md:py-32">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-10">
       <div class="lg:col-span-5">
@@ -52,8 +52,8 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
           `form-name` and `bot-field` (honeypot) fields are required by Netlify.
         -->
         <form
-          id="pilot-form"
-          name="pilot"
+          id="waitlist-form"
+          name="waitlist"
           method="POST"
           action="/"
           data-netlify="true"
@@ -65,13 +65,13 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
           data-msg-generic={f.errorGeneric}
           data-msg-network={f.errorNetwork}
         >
-          <input type="hidden" name="form-name" value="pilot" />
+          <input type="hidden" name="form-name" value="waitlist" />
 
           <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label for="pilot-name" class={labelClass}>{f.name.label}</label>
+              <label for="waitlist-name" class={labelClass}>{f.name.label}</label>
               <input
-                id="pilot-name"
+                id="waitlist-name"
                 type="text"
                 name="name"
                 required
@@ -82,9 +82,9 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
             </div>
 
             <div>
-              <label for="pilot-email" class={labelClass}>{f.email.label}</label>
+              <label for="waitlist-email" class={labelClass}>{f.email.label}</label>
               <input
-                id="pilot-email"
+                id="waitlist-email"
                 type="email"
                 name="email"
                 required
@@ -95,48 +95,33 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
             </div>
 
             <div>
-              <label for="pilot-club" class={labelClass}>{f.club.label}</label>
-              <input
-                id="pilot-club"
-                type="text"
-                name="club"
-                required
-                autocomplete="organization"
-                placeholder={f.club.placeholder}
-                class={fieldClass}
-              />
-            </div>
-
-            <div>
-              <label for="pilot-role" class={labelClass}>{f.role.label}</label>
-              <select id="pilot-role" name="role" required class={fieldClass}>
+              <label for="waitlist-role" class={labelClass}>{f.role.label}</label>
+              <select id="waitlist-role" name="role" class={fieldClass}>
                 {f.role.options.map((o) => <option value={o}>{o}</option>)}
               </select>
             </div>
 
-            <div class="sm:col-span-2">
-              <label for="pilot-athletes" class={labelClass}>{f.athletes.label}</label>
+            <div>
+              <label for="waitlist-organisation" class={labelClass}>{f.organisation.label}</label>
               <input
-                id="pilot-athletes"
-                type="number"
-                name="athletes"
-                min="1"
-                max="999"
-                inputmode="numeric"
-                placeholder={f.athletes.placeholder}
+                id="waitlist-organisation"
+                type="text"
+                name="organisation"
+                autocomplete="organization"
+                placeholder={f.organisation.placeholder}
                 class={fieldClass}
               />
             </div>
           </div>
 
           <div>
-            <label for="pilot-message" class={labelClass}>{f.message.label}</label>
+            <label for="waitlist-message" class={labelClass}>{f.message.label}</label>
             <textarea
-              id="pilot-message"
+              id="waitlist-message"
               name="message"
               rows="3"
               placeholder={f.message.placeholder}
-              class="w-full rounded-md border border-input bg-transparent px-4 py-3 text-base text-foreground placeholder:text-muted-foreground/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              class={textareaClass}
             ></textarea>
           </div>
 
@@ -153,7 +138,7 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
             <span>{f.consent}</span>
           </label>
 
-          <p id="pilot-error" role="alert" hidden class="text-sm font-medium text-primary"></p>
+          <p id="waitlist-error" role="alert" hidden class="text-sm font-medium text-primary"></p>
 
           <div class="flex flex-wrap items-center gap-4">
             <button
@@ -167,7 +152,7 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
         </form>
 
         <div
-          id="pilot-success"
+          id="waitlist-success"
           tabindex="-1"
           hidden
           class="flex items-start gap-4 rounded-md border border-border bg-muted/40 p-6"
@@ -189,11 +174,11 @@ const labelClass = 'mb-2 block font-mono text-[0.66rem] uppercase tracking-label
   // Runtime strings arrive via data-* rather than an import: importing `copy.ts`
   // here would bundle the whole page's prose into the client for the sake of
   // four messages, and it can't be tree-shaken out of a single const object.
-  const form = document.getElementById('pilot-form') as HTMLFormElement | null
+  const form = document.getElementById('waitlist-form') as HTMLFormElement | null
   if (form) {
     const msg = form.dataset
-    const errorEl = document.getElementById('pilot-error') as HTMLElement
-    const successEl = document.getElementById('pilot-success') as HTMLElement
+    const errorEl = document.getElementById('waitlist-error') as HTMLElement
+    const successEl = document.getElementById('waitlist-success') as HTMLElement
     const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
     const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
 

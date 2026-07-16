@@ -43,16 +43,12 @@ Copy `.env.example` to `.env` and set:
 | --- | --- |
 | `PUBLIC_APP_URL` | Origin of the product webapp. "Sign in" links resolve to `${PUBLIC_APP_URL}/login`. |
 
-### Pilot applications (Netlify Forms)
+### Waitlist signups (Netlify Forms)
 
-The pilot form uses **Netlify Forms** — no third-party account, no API keys. The form is named
-`pilot`; Netlify detects it automatically at deploy time and collects submissions under **Forms**
+The waitlist form uses **Netlify Forms** — no third-party account, no API keys. The form is named
+`waitlist`; Netlify detects it automatically at deploy time and collects submissions under **Forms**
 in the Netlify dashboard (export CSV, or add email/Slack notifications there). The free tier covers
 100 submissions/month.
-
-> **Migrating from the old `waitlist` form:** Netlify keys forms on `name`, so `pilot` registers as
-> a **new** form on first deploy. The old `waitlist` form stops receiving entries but its past
-> submissions stay in the dashboard under that name — export them before they're forgotten.
 
 - Submissions only work on the **deployed Netlify site**. Locally (`npm run dev`) the form
   validates but shows a notice instead of submitting — that's the `isLocal` branch, not a bug.
@@ -78,7 +74,7 @@ video clips short and silent (they render with controls, not autoplay).
 2. Build settings come from `netlify.toml` — nothing to fill in.
 3. **Site settings → Environment** → add `PUBLIC_APP_URL` = `https://app.olympialabs.eu`.
 4. **Domain settings** → add `olympialabs.eu` (+ `www`) and point DNS as Netlify instructs.
-5. Confirm **Forms** is enabled (default) so pilot applications are captured.
+5. Confirm **Forms** is enabled (default) so waitlist signups are captured.
 
 `site` in `astro.config.mjs` is already `https://olympialabs.eu` (canonical + OpenGraph URLs).
 The build output is plain static, so it also runs on Vercel / Cloudflare Pages / Caddy if you

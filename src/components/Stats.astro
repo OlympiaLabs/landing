@@ -19,10 +19,15 @@ const c = getCopy(locale).stats
         <p class="mt-5 text-lg leading-relaxed text-muted-foreground">{c.body}</p>
       </div>
 
-      <div class="grid grid-cols-1 border-l border-t border-border sm:grid-cols-2">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-start">
         {
-          c.items.map((s) => (
-            <article class="reveal border-b border-r border-border bg-background/80 px-6 py-7 md:p-8">
+          c.items.map((s, i) => (
+            <article
+              class:list={[
+                'reveal rounded-[1.5rem] border border-border bg-background/88 px-6 py-7 shadow-[0_22px_55px_-40px_rgba(17,17,17,0.4)] backdrop-blur-sm md:p-8',
+                i % 2 === 1 && 'sm:translate-y-8',
+              ]}
+            >
               <p class="font-mono text-[0.66rem] font-medium uppercase tracking-label text-primary">{s.tag}</p>
               <h3 class="mt-3 text-xl font-semibold tracking-tight text-foreground">{s.title}</h3>
               <p class="mt-3 text-[0.95rem] leading-relaxed text-muted-foreground">{s.body}</p>
