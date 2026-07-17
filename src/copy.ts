@@ -1,5 +1,18 @@
 import { DEFAULT_LOCALE, type Locale } from './i18n'
 
+/** Keep in step with `Motif.astro`'s `Props['name']` — an unmatched name draws nothing. */
+type MotifName = 'boat' | 'body' | 'session' | 'history'
+
+/**
+ * A hero signal chip (`{ n: value, t: unit }`). Annotated rather than inferred
+ * for the same reason `PROOF_MEDIA` widens `src` in config.ts: the lists below
+ * ship empty, so inference would fix them at `never[]` and any component
+ * reading an element would stop compiling. The empty state is deliberate —
+ * Hero renders the chips only when there are some — so the type has to describe
+ * what goes in the slot, not what is currently in it.
+ */
+type SignalReadout = { n: string; t: string }
+
 /**
  * Every user-facing string on the site, in one place.
  *
@@ -33,6 +46,13 @@ import { DEFAULT_LOCALE, type Locale } from './i18n'
  * / proven / accurate-to-X (no ground-truth validation exists yet); 3D joint
  * angles or trunk rotation (default backend is 2D; trunk rotation is filtered
  * out); "state-of-the-art AI".
+ *
+ * The rule is not only about sensing. It covers claims we make about ourselves:
+ * no compliance, certification or security assertion without a page behind it
+ * that a reader can open and check (this is why `pilot.form.fineprint` no
+ * longer says "GDPR-compliant"), and no scarcity, cohort size or pilot capacity
+ * that isn't a real constraint we actually have. An invented limit would
+ * discredit the sensing claims by association — they rest on the same promise.
  * ---------------------------------------------------------------------------
  */
 
@@ -91,7 +111,7 @@ const COPY_EN = {
     signal: {
       eyebrow: 'Backed by high-rate boat-motion capture',
       aria: 'Illustration of boat-motion change highlighted by the sensor',
-      readouts: [],
+      readouts: [] as SignalReadout[],
       caption: 'Illustration of the kind of boat-motion change the sensor helps coaches inspect after training.',
     },
   },
@@ -197,25 +217,25 @@ const COPY_EN = {
     title: 'The moments coaches usually miss in real time.',
     items: [
       {
-        motif: 'boat',
+        motif: 'boat' as MotifName,
         tag: 'Boat',
         title: 'Balance and boat stability',
         body: 'See how settled the boat stayed, how much it rocked and whether one side started to give way.',
       },
       {
-        motif: 'body',
+        motif: 'body' as MotifName,
         tag: 'Body',
         title: 'Technique through the body',
         body: 'Review how the athlete moved through the session and how joint range changed.',
       },
       {
-        motif: 'session',
+        motif: 'session' as MotifName,
         tag: 'Session',
         title: 'The exact turning point',
         body: 'Pinpoint when something changed and inspect the same moment across motion, GPS and video.',
       },
       {
-        motif: 'history',
+        motif: 'history' as MotifName,
         tag: 'History',
         title: 'Pattern or one-off',
         body: 'See whether a technical issue is repeating or whether it was just one rough session.',
@@ -352,7 +372,15 @@ const COPY_EN = {
       consent: 'Email me about OlympiaLabs updates and early access. I can unsubscribe anytime.',
       submit: 'Join the waitlist',
       submitting: 'Sending…',
-      fineprint: 'No spam · GDPR-compliant',
+      /**
+       * Was "No spam · GDPR-compliant" — dropped. Compliance was a claim we
+       * asserted about ourselves while the Privacy link beside it pointed at
+       * `#`, which is the one kind of error this page cannot afford: the whole
+       * argument is that a claim can be traced to something real. Both lines
+       * below are things the form actually does. Restore a compliance line only
+       * once a privacy notice exists to carry it.
+       */
+      fineprint: 'No spam · Unsubscribe anytime',
       errorGeneric: 'Something went wrong. Please try again.',
       errorNetwork: 'Network error — please check your connection and try again.',
       errorLocal: 'Netlify handles submissions — this will work once the site is deployed.',
@@ -553,19 +581,19 @@ const COPY_PT: Copy = {
         body: 'Veja quão assente o barco se manteve, quanto oscilou e se um lado começou a ceder.',
       },
       {
-        motif: 'body',
+        motif: 'body' as MotifName,
         tag: 'Corpo',
         title: 'Técnica através do corpo',
         body: 'Reveja como o atleta se moveu durante a sessão e como a amplitude articular mudou.',
       },
       {
-        motif: 'session',
+        motif: 'session' as MotifName,
         tag: 'Sessão',
         title: 'O momento exato da quebra',
         body: 'Identifique quando algo mudou e veja esse momento em movimento, GPS e vídeo.',
       },
       {
-        motif: 'history',
+        motif: 'history' as MotifName,
         tag: 'Histórico',
         title: 'Padrão ou caso isolado',
         body: 'Veja se o problema técnico se repete ou se foi apenas uma sessão menos conseguida.',
@@ -702,7 +730,7 @@ const COPY_PT: Copy = {
       consent: 'Quero receber emails com novidades da OlympiaLabs e acesso antecipado. Posso cancelar a qualquer momento.',
       submit: 'Entrar na lista de espera',
       submitting: 'A enviar…',
-      fineprint: 'Sem spam · RGPD',
+      fineprint: 'Sem spam · Cancele quando quiser',
       errorGeneric: 'Algo correu mal. Tente novamente.',
       errorNetwork: 'Erro de rede — verifique a ligação e tente novamente.',
       errorLocal: 'O Netlify trata das submissões — isto funcionará quando o site estiver publicado.',

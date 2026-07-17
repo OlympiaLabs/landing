@@ -8,6 +8,11 @@
  * `Pilot` are the two dark bands and set the page's cadence; check it still
  * alternates before reordering anything. `Proof` renders nothing until real
  * media is configured, and the rhythm holds either way.
+ *
+ * `Trust` answers `Problem` and so sits directly after it, while the question is
+ * still open. It is a light band for that reason: the only adjacent pair of
+ * non-muted sections is `Pieces`/`Pilot`, so a muted `Trust` could only ever fit
+ * down beside the footer — which is where it used to be, and why nobody read it.
  */
 import Base from '../layouts/Base.astro'
 import Nav from './Nav.astro'
@@ -16,6 +21,7 @@ import Waterline from './Waterline.astro'
 import Stats from './Stats.astro'
 import Proof from './Proof.astro'
 import Problem from './Problem.astro'
+import Trust from './Trust.astro'
 import Loop from './Loop.astro'
 import Observes from './Observes.astro'
 import Coach from './Coach.astro'
@@ -31,6 +37,7 @@ import Footer from './Footer.astro'
     <Waterline />
     <Stats />
     <Problem />
+    <Trust />
     <Coach />
     <Observes />
     <Proof />

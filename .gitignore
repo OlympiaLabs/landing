@@ -2,6 +2,8 @@
 dist/
 # dependencies
 node_modules/
+# agent scratch + linked git worktrees live here — never commit
+.claude/
 # generated types
 .astro/
 # environment (secrets / per-deploy config)

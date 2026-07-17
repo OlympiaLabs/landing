@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olympialabs.eu/sitemap-index.xml
